@@ -5,6 +5,7 @@ import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import PostFilter from "./components/PostFilter";
 import Modal from "./components/UI/modal/Modal";
+import Pagination from './components/UI/pagination/Pagination';
 
 import MyButton from "./components/UI/button/MyButton";
 import { usePosts } from "./hooks/usePost";
@@ -12,6 +13,8 @@ import { useFetching } from "./hooks/useFetching";
 
 import PostService from "./API/PostService";
 import Loader from './components/UI/loader/Loader';
+
+import {getPagesCount, getPagesArray} from './utils/pages';
 
 function App() {
 	// const [posts, setPosts] = useState([
@@ -24,8 +27,26 @@ function App() {
 
 	const [filter, setFilter] = useState({ sort: "", query: "" });
 	const [modal, setModal] = useState(false);
-  const [fetchPosts, isPostLoading, postError] = useFetching( async()=> {const posts = await PostService.getAll();
-		setPosts(posts)});
+	const [totalCount, setTotalCount] = useState(0);
+	const [totalPages, setTotalPages] = useState(0);
+	const [limit, setLimit] = useState(10);
+	const [page, setPage] = useState(1);
+
+	let pagesArray = getPagesArray(totalPages);
+
+	const changePage= async(page) =>{ 
+		setPage(page);
+		fetchPosts();
+	}
+
+  	const [fetchPosts, isPostLoading, postError] = useFetching( async()=> {
+	const responce = await PostService.getAll(limit, page);
+		setPosts(responce.data)
+		setTotalCount(responce.headers["x-total-count"]);
+		const totalCount = responce.headers["x-total-count"];
+		setTotalPages(getPagesCount(totalCount, limit));
+
+	}); 
 
 	const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query);
 
@@ -38,18 +59,11 @@ function App() {
 		setPosts(posts.filter((p) => p.id !== post.id));
 	};
 
+
+	// выполняется в начале и следит за изменением [page] в пагинации
 	useEffect(() => {
 		fetchPosts();
-	}, []);
-
-	// async function fetchPosts() {
-	// 	setIsPostLoading(true);
-    // setTimeout(async()=> {const posts = await PostService.getAll();
-	// 	setPosts(posts);
-	// 	setIsPostLoading(false);}, 2000)
-    
-		
-	// }
+	}, [page]);
 
 	return (
 		<>
@@ -71,7 +85,8 @@ function App() {
 					title="посты про JS"
 					remove={removePost}
 				/>}
-         
+
+				<Pagination totalPages={totalPages} changePage={changePage} page={page}/>
 				
 			</div>
 		</>

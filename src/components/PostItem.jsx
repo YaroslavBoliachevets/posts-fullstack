@@ -3,10 +3,11 @@ import MyButton from "./UI/button/MyButton";
 import { motion, AnimatePresence } from "motion/react";
 
 const PostItem = function (props) {
-	const { title, body } = props.post;
+	const { title, body, id } = props.post;
 	const { number, remove } = props;
 
 	return (
+			// motion для стилизации появления/удаления просто обертка
 			<motion.div
 				className="post"
 				initial={{ transform: "translateX(-300px)" }}
@@ -19,7 +20,7 @@ const PostItem = function (props) {
 			>
 				<div className="post__content">
 					<strong>
-						{number} {title}
+						{id} {title}
 					</strong>
 					<div>{body}</div>
 				</div>

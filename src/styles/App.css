@@ -21,3 +21,34 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.page_wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 30px;
+    width: 30px;
+    border: 2px solid teal;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.page:hover {
+    border: 2px solid rgb(0, 68, 68);
+}
+
+.page:nth-child(n+2) {
+        margin-left: 10px;
+    }
+
+.page__current {
+    border: 2px solid rgb(255, 187, 0);
+}
