@@ -10,8 +10,6 @@ function PostIdPage() {
 	const [post, setPost] = useState({});
 	const [comments, setComments] = useState([]);
 
-	console.log(comments);
-
 	// загрузка по id
 	const [fetchPostById, isLoading, error] = useFetching(async (params) => {
 		const responce = await PostService.getById(id);
