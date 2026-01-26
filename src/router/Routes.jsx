@@ -2,7 +2,7 @@
 import React from "react";
 
 import About from "../pages/About.jsx";
-import Posts from "../pages/Posts.jsx";
+import Posts from "../pages/Posts/Posts.jsx";
 import Error from "../pages/Error.jsx";
 import PostIdPage from "../pages/PostIdPage.jsx";
 import Login from "../pages/Login.jsx";

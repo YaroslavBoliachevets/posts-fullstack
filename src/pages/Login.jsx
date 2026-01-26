@@ -18,6 +18,7 @@ function Login() {
 				<MyInput type="text" placeholder="введите логин" />
 				<MyInput type="password" placeholder="введите пароль" />
 				<MyButton>войти</MyButton>
+				<MyButton>войти как гость</MyButton>
 			</form>
 		</div>
 	);

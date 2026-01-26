@@ -1,6 +1,22 @@
-.myInput {
-    width: 100%;
-    padding: 5px 15px;
-    margin: 5px 0px;
-    border: 1px solid teal;
+.input {
+	padding: 8px 12px;
+	border: 1px solid #d0d7de;
+	border-radius: 6px;
+	font-size: 14px;
+	background-color: #f6f8fa;
+	color: #24292f;
+	transition:
+		border-color 0.2s,
+		box-shadow 0.2s;
+	height: 36px;
+}
+
+.input:hover {
+	border-color: #b3b3b3;
+}
+
+.input:focus {
+	border-color: #0969da;
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(9, 105, 218, 0.2);
 }

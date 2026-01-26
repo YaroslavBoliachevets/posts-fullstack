@@ -1,0 +1,32 @@
+.post {
+	background-color: #fff;
+	border: 1px solid #e1e4e8;
+	border-radius: 8px;
+	padding: 16px 20px;
+	margin-bottom: 16px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+	transition: box-shadow 0.2s;
+}
+
+.post:hover {
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 8px;
+	color: #24292f;
+}
+
+.body {
+	font-size: 14px;
+	color: #57606a;
+	margin-bottom: 12px;
+	line-height: 1.5;
+}
+
+.actions {
+	display: flex;
+	gap: 10px;
+}

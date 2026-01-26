@@ -2,11 +2,11 @@ import React from "react";
 import MySelect from "./UI/select/MySelect";
 import MyInput from "./UI/input/myInput";
 
-const PostFilter = ({ filter, setFilter }) => {
+const PostFilter = ({ filter, setFilter, className }) => {
 	return (
-		<div>
+		<div className={className}>
 			<MyInput
-				placeholder={"Поиск..."}
+				placeholder={"seartch..."}
 				value={filter.query}
 				onChange={(e) => setFilter({ ...filter, query: e.target.value })}
 			/>
@@ -14,10 +14,10 @@ const PostFilter = ({ filter, setFilter }) => {
 			<MySelect
 				value={filter.sort}
 				onChange={(selectedSort) => setFilter({ ...filter, sort: selectedSort })}
-				defaultValue={"Сортировка"}
+				defaultValue={"sort"}
 				options={[
-					{ value: "title", name: "по названию" },
-					{ value: "body", name: "по содержанию" },
+					{ value: "title", name: "by name" },
+					{ value: "body", name: "by content" },
 				]}
 			/>
 		</div>

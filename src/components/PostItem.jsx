@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./PostItem.module.css";
 import MyButton from "./UI/button/MyButton";
 import { motion, AnimatePresence } from "motion/react";
 // для создания динамической навигации, каждый пост - своя ссылка
@@ -17,7 +18,7 @@ const PostItem = function (props) {
 	return (
 		// motion для стилизации появления/удаления просто обертка
 		<motion.div
-			className="post"
+			className={styles.post}
 			initial={{ transform: "translateX(-300px)" }}
 			animate={{ transform: "translateX(0px)" }}
 			exit={{ transform: "translateX(100px)", opacity: 0 }}
@@ -26,13 +27,13 @@ const PostItem = function (props) {
 			}}
 			key={props.post.id}
 		>
-			<div className="post__content">
-				<strong>
+			<div>
+				<h5 className={styles.title}>
 					{id} {title}
-				</strong>
-				<div>{body}</div>
+				</h5>
+				<p className={styles.body}>{body}</p>
 			</div>
-			<div className="post__btns">
+			<div className={styles.actions}>
 				<MyButton onClick={() => openPost(id)}>Открыть</MyButton>
 				<MyButton onClick={() => remove(props.post)}>Удалить</MyButton>
 			</div>

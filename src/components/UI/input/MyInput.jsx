@@ -1,10 +1,8 @@
 import React from "react";
-import classes from './myInput.module.css'
+import styles from "./MyInput.module.css";
 
-function MyInput (props) {
-    return (
-        <input {...props} className={classes.myInput}/>
-    )
+function MyInput(props) {
+	return <input {...props} className={styles.input} />;
 }
 
 export default MyInput;

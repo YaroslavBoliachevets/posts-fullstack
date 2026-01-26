@@ -1,9 +1,45 @@
-.myBtn {
-    margin-top: 20px;
-    padding: 5px 15px;
-    color: teal;
-    font-size: 14px;
-    background: transparent;
-    border: 1px solid teal;
-    cursor: pointer;
+.button {
+	/* margin-top: 20px; */
+	text-transform: capitalize;
+	padding: 8px 16px;
+	border: none;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	background: transparent;
+	/* border: 1px solid teal; */
+	cursor: pointer;
+	transition: color 0.2s ease;
+}
+
+.button:focus {
+	border-color: #0969da;
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(9, 105, 218, 0.2);
+	opacity: 0.8;
+}
+
+.primary {
+	background-color: teal;
+	color: white;
+}
+
+.outline {
+	background-color: transparent;
+	border: 2 solid teal;
+	color: teal;
+}
+
+.danger {
+	background-color: #e74c3c;
+	color: white;
+}
+
+.button:hover {
+	opacity: 0.8;
+}
+
+.disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
 }
