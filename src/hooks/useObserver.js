@@ -8,7 +8,7 @@ export const useObserver = (ref, canLoad, isLoading, callback) => {
 
 		const cb = (enties) => {
 			if (enties[0].isIntersecting && canLoad) {
-				console.log("див в зоне видимости", observer.current);
+				// console.log("див в зоне видимости", observer.current);
 				callback();
 			}
 		};

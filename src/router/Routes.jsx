@@ -5,7 +5,7 @@ import About from "../pages/About.jsx";
 import Posts from "../pages/Posts/Posts.jsx";
 import Error from "../pages/Error.jsx";
 import PostIdPage from "../pages/PostIdPage/PostIdPage.jsx";
-import Login from "../pages/Login.jsx";
+import Login from "../pages/Login/Login.jsx";
 
 export const privateRoutes = [
 	{ path: "/about", element: <About /> },
