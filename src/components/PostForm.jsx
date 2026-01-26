@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./PostForm.module.css";
 
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/myInput";
@@ -13,7 +14,7 @@ function PostForm({ create }) {
 	};
 
 	return (
-		<form>
+		<form className={styles.form}>
 			<MyInput
 				onChange={(e) => setPost({ ...post, title: e.target.value })}
 				value={post.title}
@@ -21,7 +22,8 @@ function PostForm({ create }) {
 				placeholder="Название поста"
 			/>
 
-			<MyInput
+			<textarea
+				className={styles.description}
 				value={post.body}
 				onChange={(e) => setPost({ ...post, body: e.target.value })}
 				type="text"

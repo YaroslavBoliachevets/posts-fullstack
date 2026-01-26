@@ -1,0 +1,26 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 400px;
+}
+
+.description {
+	overflow: hidden;
+	padding: 10px 14px;
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	font-size: 14px;
+	background-color: #f6f8fa;
+	resize: vertical;
+	min-height: 80px;
+	transition:
+		border-color 0.2s,
+		box-shadow 0.2s;
+}
+
+.description:focus {
+	border-color: #0969da;
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(9, 105, 218, 0.2);
+}

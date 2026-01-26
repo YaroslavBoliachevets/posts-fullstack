@@ -57,7 +57,7 @@ function Posts() {
 	const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query);
 
 	const createPost = (newPost) => {
-		setPosts([...posts, newPost]);
+		setPosts([newPost, ...posts]);
 		setModal(false);
 	};
 
