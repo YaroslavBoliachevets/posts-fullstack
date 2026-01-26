@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import styles from "./PostIdPage.module.css";
 import { useParams } from "react-router-dom";
-import useFetching from "../hooks/useFetching";
-import PostService from "../API/PostService";
-import Loader from "../components/UI/loader/Loader";
+import useFetching from "../../hooks/useFetching";
+import PostService from "../../API/PostService";
+import Loader from "../../components/UI/loader/Loader";
 
 function PostIdPage() {
 	// хук для получания параметра из динамически созданого url /posts/:id
@@ -30,34 +31,31 @@ function PostIdPage() {
 			fetchComments(id);
 		}
 	}, [id]);
-
 	return (
-		<div>
-			<h1>Инфа по посту {id} </h1>
-			{isLoading ? (
-				<Loader />
-			) : (
-				<div>
-					{id}
-					{post.title}
-				</div>
-			)}
+		<div className="container">
+			<div className={styles.postInfo}>
+				<h1 className={styles.title}>
+					{id} {post.title}
+				</h1>
+				{isLoading ? <Loader /> : <div>{post.body}</div>}
 
-			{isComLoading ? (
-				<Loader />
-			) : (
-				<div>
-					{comments.map(({ name, email, body }) => {
-						return (
-							<div className="">
-								{" "}
-								<h5>{email}</h5>
-								<div className="">{body}</div>
-							</div>
-						);
-					})}
-				</div>
-			)}
+				{isComLoading ? (
+					<Loader />
+				) : (
+					<div className={styles.comments}>
+						{comments.map(({ id, email, body }) => {
+							return (
+								<div className={styles.comment} key={id}>
+									<div className={styles.meta}>
+										<span className={styles.email}>{email}</span>
+									</div>
+									<div className={styles.body}>{body}</div>
+								</div>
+							);
+						})}
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }
