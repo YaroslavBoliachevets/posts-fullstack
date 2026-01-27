@@ -34,8 +34,8 @@ const PostItem = function (props) {
 				<p className={styles.body}>{body}</p>
 			</div>
 			<div className={styles.actions}>
-				<MyButton onClick={() => openPost(id)}>Открыть</MyButton>
-				<MyButton onClick={() => remove(props.post)}>Удалить</MyButton>
+				<MyButton onClick={() => openPost(id)}>open</MyButton>
+				<MyButton onClick={() => remove(props.post)}>delete</MyButton>
 			</div>
 		</motion.div>
 	);

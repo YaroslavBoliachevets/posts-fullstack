@@ -6,7 +6,7 @@ const PostFilter = ({ filter, setFilter, className }) => {
 	return (
 		<div className={className}>
 			<MyInput
-				placeholder={"seartch..."}
+				placeholder={"search..."}
 				value={filter.query}
 				onChange={(e) => setFilter({ ...filter, query: e.target.value })}
 			/>

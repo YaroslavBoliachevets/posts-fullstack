@@ -7,7 +7,7 @@ import PostList from "../../components/PostList";
 import PostForm from "../../components/PostForm";
 import PostFilter from "../../components/PostFilter";
 import Modal from "../../components/UI/modal/Modal";
-import Pagination from "../../components/UI/pagination/Pagination";
+// import Pagination from "../../components/UI/pagination/Pagination";
 
 import MyButton from "../../components/UI/button/MyButton";
 import { usePosts } from "../../hooks/usePost";
@@ -121,10 +121,10 @@ function Posts() {
 						/>
 						{/* ref={lastElement} автоматически кладет в коробку lastElement.current =  наш div
 						 */}
-						<div ref={lastElement} style={{ height: 20, background: "red" }}></div>
+						<div ref={lastElement} style={{ height: 2 }}></div>
 						{isPostsLoading && <Loader />}
 
-						<Pagination totalPages={totalPages} changePage={changePage} page={page} />
+						{/* <Pagination totalPages={totalPages} changePage={changePage} page={page} /> */}
 					</div>
 				</div>
 			</div>
