@@ -2,6 +2,7 @@ import "dotenv/config";
 import { PrismaClient } from "./generated/prisma/client/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import express from "express";
+import ErrorHandler from "./middleware/ErrorHandlingMiddleware";
 const cors = require("cors");
 
 const connectionString = process.env.DATABASE_URL;
@@ -15,6 +16,9 @@ app.use(express.json());
 
 const router = require("./routes/index");
 app.use("/api", router);
+
+// ErrorHandler должен быть в конце чтобы обрабатывать все ошибки, после него работа прекращается/возвращается ответ клиенту
+app.use(ErrorHandler);
 
 const PORT = process.env.PORT || 5000;
 
