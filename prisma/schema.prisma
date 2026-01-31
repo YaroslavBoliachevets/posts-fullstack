@@ -16,14 +16,31 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  content String?
+  id        Int    @id @default(autoincrement())
+  email     String @unique
+  password  String
+  role      String @default("USER")
+
+  posts     Post[]
 }
 
+model Post {
+  id Int @id @default(autoincrement())
+  title   String 
+  body    String
+  createdAt DateTime @default(now())
 
-model User1 {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  content String?
+  userId  Int
+  user    User @relation(fields:[userId], references:[id])
+  comments Comment[]
+}
+
+model Comment {
+  id          Int @id @default(autoincrement())
+  name        String
+  email       String
+  body        String
+
+  postId      Int
+  post        Post @relation(fields:[postId], references:[id])
 }

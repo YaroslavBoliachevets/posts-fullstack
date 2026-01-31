@@ -1,26 +1,22 @@
 import "dotenv/config";
-// import { PrismaClient } from "@prisma/client";
-// import { prisma } from "./lib/prisma.ts";
-// import { Express } from "express";
-
 import { PrismaClient } from "./generated/prisma/client/client";
-
 import { PrismaPg } from "@prisma/adapter-pg";
-import dotenv from "dotenv";
+import express from "express";
+const cors = require("cors");
 
 const connectionString = process.env.DATABASE_URL;
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
-// console.log(prisma);
-
-import express from "express";
 
 const app = express();
+app.use(cors());
+//чтобы парсить json формат
+app.use(express.json());
+
+const router = require("./routes/index");
+app.use("/api", router);
 
 const PORT = process.env.PORT || 5000;
-app.get("/", (req: any, res: any) => {
-	res.send("helo world");
-});
 
 const start = async () => {
 	try {
@@ -34,4 +30,3 @@ const start = async () => {
 };
 
 start();
-// app.listen(PORT, console.log(`Server started on port ${PORT}`));
