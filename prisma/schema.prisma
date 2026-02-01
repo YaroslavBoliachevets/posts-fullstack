@@ -21,7 +21,11 @@ model User {
   password  String
   role      String @default("USER")
 
+  isActivated Boolean @default(false)
+  activationLink String 
+
   posts     Posts[]
+  token Token?
 }
 
 model Posts {
@@ -43,4 +47,11 @@ model Comment {
 
   postId      Int
   post        Posts @relation(fields:[postId], references:[id])
+}
+
+model Token {
+  id Int @id @default(autoincrement())
+  refreshToken String @unique
+  userId Int @unique 
+  user User @relation(fields:[userId], references:[id])
 }

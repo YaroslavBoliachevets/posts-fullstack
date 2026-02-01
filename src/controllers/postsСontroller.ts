@@ -44,7 +44,15 @@ class PostsController {
 
 	async getAll(req: Request, res: Response, next: NextFunction) {
 		try {
-			const allPosts = await prisma.posts.findMany({ orderBy: { id: "asc" } });
+			const { limit, page } = req.query;
+			const currentPage = Number(page) || 1;
+			const currentLimit = Number(limit) || 10;
+			let offset = (currentPage - 1) * currentLimit;
+			const allPosts = await prisma.posts.findMany({
+				orderBy: { id: "asc" },
+				take: currentLimit,
+				skip: offset,
+			});
 			return res.json(allPosts);
 		} catch (e: any) {
 			next(ApiError.badRequest(e.message));
@@ -52,7 +60,9 @@ class PostsController {
 	}
 
 	async getOne(req: Request, res: Response) {
-		const { id } = req.body;
+		const id = Number(req.params.id);
+		const post = await prisma.posts.findUnique({ where: { id: id } });
+		return res.json(post);
 	}
 }
 

@@ -4,8 +4,11 @@ const router = Router();
 // const userController = require("../controllers/userController");
 import userController from "../controllers/userController";
 
-router.get("/auth", userController.check);
 router.post("/registration", userController.registration);
 router.post("/login", userController.login);
+router.post("/logout", userController.logout);
+router.get("/activate/:link", userController.check);
+// router.get("/refresh");
+// router.get("/users");
 
 module.exports = router;
