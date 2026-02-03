@@ -27,6 +27,18 @@ class tokenService {
 
 		return prisma.token.create({ data: { userId, refreshToken } });
 	}
+
+	async removeToken(token: string) {
+		const tokenData = await prisma.token.findUnique({
+			where: {
+				refreshToken: token,
+			},
+		});
+		if (!tokenData) return null;
+		return await prisma.token.delete({
+			where: { refreshToken: token },
+		});
+	}
 }
 
 export default new tokenService();

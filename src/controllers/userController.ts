@@ -28,7 +28,7 @@ class UserController {
 	}
 
 	async login(req: Request, res: Response, next: NextFunction) {
-		const { email, password } = req.body;
+		const { email, password, activationLink } = req.body;
 		const user = await prisma.user.findUnique({
 			where: { email: email },
 		});
@@ -42,9 +42,21 @@ class UserController {
 		const userDto = new UserDto(user);
 		const tokens = tokenService.generateTokens({ ...userDto });
 		await tokenService.saveToken(userDto.id, tokens.refreshToken);
+		res.cookie("refreshToken", tokens.refreshToken, {
+			httpOnly: true,
+			secure: true,
+			sameSite: "none",
+		});
 		return res.json({ ...tokens, user: userDto });
 	}
-	async logout(req: Request, res: Response) {}
+	async logout(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { refreshToken } = req.cookies;
+			const token = await userService.logout(refreshToken);
+			res.clearCookie("refreshToken");
+			res.json(token);
+		} catch (error) {}
+	}
 
 	async activate(req: Request, res: Response, next: NextFunction) {
 		try {

@@ -43,6 +43,11 @@ class userService {
 			data: { isActivated: true },
 		});
 	}
+
+	async logout(refreshToken: string) {
+		const token = await tokenService.removeToken(refreshToken);
+		return token;
+	}
 }
 
 export default module.exports = new userService();
