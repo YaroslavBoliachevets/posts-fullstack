@@ -31,6 +31,18 @@ class userService {
 			user: userDto,
 		};
 	}
+
+	async activate(activationLink: string | undefined) {
+		const user = await prisma.user.findFirst({ where: { activationLink } });
+		if (!user) {
+			const message: string = "Activation link is missing";
+			throw ApiError.badRequest(message);
+		}
+		await prisma.user.update({
+			where: { id: user.id },
+			data: { isActivated: true },
+		});
+	}
 }
 
 export default module.exports = new userService();
