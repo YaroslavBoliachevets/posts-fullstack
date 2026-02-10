@@ -11,7 +11,7 @@ export default class PostService {
 				},
 			},
 		);
-		// console.log(responce.data)
+		console.log(responce.data);
 		return responce;
 	}
 
@@ -25,7 +25,7 @@ export default class PostService {
 		const responce = await axios.get(
 			`https://jsonplaceholder.typicode.com/posts/${id}/comments`,
 		);
-
+		console.log(responce);
 		return responce;
 	}
 }

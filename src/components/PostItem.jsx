@@ -8,7 +8,6 @@ import { useNavigate } from "react-router";
 const PostItem = function (props) {
 	const { title, body, id } = props.post;
 	const { number, remove } = props;
-
 	const navigate = useNavigate();
 
 	const openPost = (id) => {
@@ -29,7 +28,7 @@ const PostItem = function (props) {
 		>
 			<div>
 				<h5 className={styles.title}>
-					{id} {title}
+					{number} {title}
 				</h5>
 				<p className={styles.body}>{body}</p>
 			</div>
