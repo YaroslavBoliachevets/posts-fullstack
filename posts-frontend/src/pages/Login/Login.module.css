@@ -1,0 +1,30 @@
+.loginPage {
+	max-width: 400px;
+	margin: 60px auto;
+	padding: 32px;
+
+	background-color: #fff;
+	border: 1px solid teal;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.006);
+}
+
+.title {
+	font-size: 22px;
+	font-weight: 600;
+	margin-bottom: 24px;
+	color: #24292f;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.actions {
+	display: flex;
+	justify-content: start;
+	gap: 12px;
+	margin-top: 12px;
+}
