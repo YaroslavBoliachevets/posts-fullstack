@@ -13,7 +13,7 @@ import MyButton from "../../components/UI/button/MyButton";
 import { usePosts } from "../../hooks/usePost";
 import { useFetching } from "../../hooks/useFetching";
 
-import PostService from "../../API/PostService";
+import PostService from "../../services/PostService";
 import Loader from "../../components/UI/loader/Loader";
 
 import { getPagesCount, getPagesArray } from "../../utils/pages";

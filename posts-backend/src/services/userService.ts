@@ -75,9 +75,9 @@ class userService {
 		});
 		if (!user) throw ApiError.unauthorisedError();
 		const userDto = new UserDto(user);
-		const token = tokenService.generateTokens({ ...userDto });
-		await tokenService.saveToken(userDto.id, token.refreshToken);
-		return { ...token, user: userDto };
+		const tokens = tokenService.generateTokens({ ...userDto });
+		await tokenService.saveToken(userDto.id, tokens.refreshToken);
+		return { ...tokens, user: userDto };
 	}
 }
 

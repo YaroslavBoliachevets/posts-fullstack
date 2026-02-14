@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./PostIdPage.module.css";
 import { useParams } from "react-router-dom";
 import useFetching from "../../hooks/useFetching";
-import PostService from "../../API/PostService";
+import PostService from "../../services/PostService";
 import Loader from "../../components/UI/loader/Loader";
 
 function PostIdPage() {
