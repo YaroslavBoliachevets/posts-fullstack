@@ -72,7 +72,7 @@ export default class Store {
 		try {
 			this.setIsLoading(true);
 			const responce = await axios.get<AuthResponce>(
-				`${import.meta.env.VITE_API_URL}/api/user/refresh`,
+				`${import.meta.env.VITE_API_URL}/api/refresh`,
 				{ withCredentials: true },
 			);
 			console.log("store checkAuth responce", responce);

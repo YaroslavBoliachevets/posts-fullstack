@@ -6,7 +6,14 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const app = express();
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+
+const allowedOrigins = [
+	"http://localhost:5173",
+	"http://localhost:7000",
+	process.env.CLIENT_URL,
+];
+
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 // и добавляем заголовок вручную вдруг експресс что-то не понравится
 app.use((req, res, next) => {
