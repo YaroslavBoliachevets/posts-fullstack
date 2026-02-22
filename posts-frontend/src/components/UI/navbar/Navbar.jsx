@@ -1,25 +1,23 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MyButton from "../button/MyButton";
-// import { AuthContext } from "../../../context/context";
-import { AuthContext } from "../../../models/AuthContextType";
+import { Context } from "../../../main";
+import { observer } from "mobx-react-lite";
 
 import styles from "./Navbar.module.css";
 
 function Navbar() {
-	const { isAuth, setIsAuth } = useContext(AuthContext);
+	const { store } = useContext(Context);
 	const navigate = useNavigate();
 
 	const logout = () => {
-		setIsAuth(false);
-		localStorage.removeItem("auth");
-		// перекидает на страницу входа
+		store.logout();
 		navigate("/login");
 	};
 	return (
 		<div className="background-wrap">
 			<div className={`container ${styles.nav}`}>
-				{isAuth ? (
+				{store.isAuth ? (
 					<MyButton variant="primary" onClick={logout}>
 						exit
 					</MyButton>
@@ -39,4 +37,4 @@ function Navbar() {
 	);
 }
 
-export default Navbar;
+export default observer(Navbar);
