@@ -38,7 +38,7 @@ class UserController {
 			secure: true,
 			sameSite: "none",
 		});
-		return res.json({ userData });
+		return res.json(userData);
 	}
 	async logout(req: Request, res: Response, next: NextFunction) {
 		try {

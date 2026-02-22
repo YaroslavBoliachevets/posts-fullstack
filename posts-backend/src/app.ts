@@ -6,7 +6,14 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+
+// и добавляем заголовок вручную вдруг експресс что-то не понравится
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Credentials", "true");
+	next();
+});
+
 app.use(cookieParser());
 //чтобы парсить json формат
 app.use(express.json());
