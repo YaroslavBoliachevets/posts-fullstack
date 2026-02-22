@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MyButton from "../button/MyButton";
-import { AuthContext } from "../../../context/context";
+// import { AuthContext } from "../../../context/context";
+import { AuthContext } from "../../../models/AuthContextType";
 
 import styles from "./Navbar.module.css";
 
