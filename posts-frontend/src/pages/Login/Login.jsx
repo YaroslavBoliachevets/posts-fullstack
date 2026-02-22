@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import MyButton from "../../components/UI/button/MyButton";
 import MyInput from "../../components/UI/input/myInput";
 // import { AuthContext } from "../../context/context";
-import { AuthContext } from "../../models/AuthContextType";
+// import { AuthContext } from "../../models/AuthContextType";
 import { Context } from "../../main";
+// import { observer } from "mobx-react-lite";
 
 function Login() {
 	// const { isAuth, setIsAuth } = useContext(AuthContext);
@@ -58,4 +59,5 @@ function Login() {
 	);
 }
 
+// export default observer(Login);
 export default Login;

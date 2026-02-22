@@ -1,33 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./styles/App.css";
 import { BrowserRouter } from "react-router-dom";
-
-// создает контекст для доступа к глобальной переменной isAuth
-import { AuthContext } from "./models/AuthContextType";
 
 // маршрутизация по страничкам
 import AppRouter from "./components/AppRouter.jsx";
 
 import Navbar from "./components/UI/navbar/Navbar.jsx";
+import { observer } from "mobx-react-lite";
 
 function App() {
-	const [isAuth, setIsAuth] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
-
-	useEffect(() => {
-		if (localStorage.getItem("auth")) {
-			setIsAuth(true);
-		}
-		setIsLoading(false);
-	}, []);
 	return (
-		// тут передаем переменные в провайдер
-		<AuthContext.Provider value={{ isAuth, setIsAuth, isLoading }}>
-			<BrowserRouter>
-				<Navbar />
-				<AppRouter />
-			</BrowserRouter>
-		</AuthContext.Provider>
+		<BrowserRouter>
+			<Navbar />
+			<AppRouter />
+		</BrowserRouter>
 	);
 }
-export default App;
+// export default App;
+export default observer(App);
