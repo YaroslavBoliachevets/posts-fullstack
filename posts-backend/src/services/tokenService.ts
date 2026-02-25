@@ -20,6 +20,7 @@ class tokenService {
 
 	validateAccessToken(token: string) {
 		try {
+			// проверяем что токен подписан именно этим секретом, не подделан, не изменен
 			const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 			return userData;
 		} catch (error) {

@@ -2,6 +2,7 @@ import "dotenv/config";
 import prisma from "./prisma/client";
 import express from "express";
 import ErrorHandler from "./middleware/ErrorHandlingMiddleware";
+
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
