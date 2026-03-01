@@ -65,6 +65,7 @@ class tokenService {
 			where: { refreshToken: token },
 		});
 		if (!findedToken) return null;
+		return findedToken;
 	}
 }
 
