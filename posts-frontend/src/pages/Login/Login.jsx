@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
-import MyButton from "../../components/UI/button/MyButton";
-import MyInput from "../../components/UI/input/MyInput";
+import Button from "../../components/UI/button/Button";
+import Input from "../../components/UI/input/Input";
 // import { AuthContext } from "../../context/context";
 // import { AuthContext } from "../../models/AuthContextType";
 import { Context } from "../../main";
@@ -37,21 +37,21 @@ function Login() {
 			<div className={styles.loginPage}>
 				<h1 className={styles.title}>log in or continue as a guest </h1>
 				<form className={styles.form}>
-					<MyInput
+					<Input
 						value={email}
 						type="text"
 						placeholder="login"
 						onChange={(e) => setEmail(e.target.value)}
 					/>
-					<MyInput
+					<Input
 						value={password}
 						type="password"
 						placeholder="password"
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<div className={styles.actions}>
-						<MyButton onClick={(e) => login(e)}>login</MyButton>
-						<MyButton onClick={(e) => registration(e)}>registration</MyButton>
+						<Button onClick={(e) => login(e)}>login</Button>
+						<Button onClick={(e) => registration(e)}>registration</Button>
 					</div>
 				</form>
 			</div>

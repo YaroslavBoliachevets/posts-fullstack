@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./MyButton.module.css";
+import styles from "./Button.module.css";
 import clsx from "clsx";
 
-function MyButton({
+function Button({
 	children,
 	variant = "primary",
 	disabled = false,
@@ -26,4 +26,4 @@ function MyButton({
 	);
 }
 
-export default MyButton;
+export default Button;

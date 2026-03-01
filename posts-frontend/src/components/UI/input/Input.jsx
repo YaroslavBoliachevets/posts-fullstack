@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "./MyInput.module.css";
+import styles from "./Input.module.css";
 import clsx from "clsx";
 
-function MyInput({ className, ...props }) {
+function Input({ className, ...props }) {
 	return <input className={clsx(styles.input, className)} {...props} />;
 }
 
-export default MyInput;
+export default Input;

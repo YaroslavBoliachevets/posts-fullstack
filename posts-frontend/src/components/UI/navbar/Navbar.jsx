@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MyButton from "../button/MyButton";
+import Button from "../button/Button";
 import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
 
@@ -18,9 +18,9 @@ function Navbar() {
 		<div className="background-wrap">
 			<div className={`container ${styles.nav}`}>
 				{store.isAuth ? (
-					<MyButton variant="primary" onClick={logout}>
+					<Button variant="primary" onClick={logout}>
 						exit
-					</MyButton>
+					</Button>
 				) : (
 					""
 				)}

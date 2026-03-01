@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./PostItem.module.css";
-import MyButton from "./UI/button/MyButton";
+import Button from "./UI/button/Button";
 import { motion, AnimatePresence } from "motion/react";
 // для создания динамической навигации, каждый пост - своя ссылка
 import { useNavigate } from "react-router";
@@ -33,8 +33,8 @@ const PostItem = function (props) {
 				<p className={styles.body}>{body}</p>
 			</div>
 			<div className={styles.actions}>
-				<MyButton onClick={() => openPost(id)}>open</MyButton>
-				<MyButton onClick={() => remove(props.post)}>delete</MyButton>
+				<Button onClick={() => openPost(id)}>open</Button>
+				<Button onClick={() => remove(props.post)}>delete</Button>
 			</div>
 		</motion.div>
 	);

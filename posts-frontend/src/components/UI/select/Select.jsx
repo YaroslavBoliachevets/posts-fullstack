@@ -1,8 +1,8 @@
 import React from "react";
 import clsx from "clsx";
-import styles from "./MySelect.module.css";
+import styles from "./Select.module.css";
 
-function MySelect({ options, defaultValue, value, onChange, ...porps }) {
+function Select({ options, defaultValue, value, onChange, ...porps }) {
 	return (
 		<select
 			className={styles.select}
@@ -21,4 +21,4 @@ function MySelect({ options, defaultValue, value, onChange, ...porps }) {
 	);
 }
 
-export default MySelect;
+export default Select;

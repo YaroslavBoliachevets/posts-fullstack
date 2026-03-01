@@ -9,7 +9,7 @@ import PostFilter from "../../components/PostFilter";
 import Modal from "../../components/UI/modal/Modal";
 // import Pagination from "../../components/UI/pagination/Pagination";
 
-import MyButton from "../../components/UI/button/MyButton";
+import Button from "../../components/UI/button/Button";
 import { usePosts } from "../../hooks/usePost";
 import { useFetching } from "../../hooks/useFetching";
 
@@ -18,7 +18,7 @@ import Loader from "../../components/UI/loader/Loader";
 
 import { getPagesCount, getPagesArray } from "../../utils/pages";
 import { useObserver } from "../../hooks/useObserver";
-import MySelect from "../../components/UI/select/MySelect";
+import Select from "../../components/UI/select/Select";
 
 function Posts() {
 	const [posts, setPosts] = useState([]);
@@ -84,7 +84,7 @@ function Posts() {
 			<div>
 				<div className="background-wrap">
 					<div className={clsx("container", styles.toolbar)}>
-						<MyButton onClick={() => setModal(true)}>create post</MyButton>
+						<Button onClick={() => setModal(true)}>create post</Button>
 						<Modal visible={modal} setVisible={setModal}>
 							<PostForm create={createPost} />
 						</Modal>
@@ -95,7 +95,7 @@ function Posts() {
 								filter={filter}
 								setFilter={setFilter}
 							/>
-							<MySelect
+							<Select
 								value={limit}
 								onChange={(value) => changeLimit(value)}
 								defaultValue={"posts per page"}
