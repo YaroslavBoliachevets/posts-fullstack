@@ -18,7 +18,6 @@ function Login() {
 
 	const login = async (e) => {
 		e.preventDefault();
-		console.log("login");
 		await store.login(email, password);
 		// const userData = { email, password };
 		// setIsAuth(!isAuth);
