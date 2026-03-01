@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import MyButton from "../../components/UI/button/MyButton";
-import MyInput from "../../components/UI/input/myInput";
+import MyInput from "../../components/UI/input/MyInput";
 // import { AuthContext } from "../../context/context";
 // import { AuthContext } from "../../models/AuthContextType";
 import { Context } from "../../main";

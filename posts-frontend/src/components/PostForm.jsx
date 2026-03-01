@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./PostForm.module.css";
 
 import MyButton from "./UI/button/MyButton";
-import MyInput from "./UI/input/myInput";
+import MyInput from "./UI/input/MyInput";
 
 function PostForm({ create }) {
 	const [post, setPost] = useState({ title: "", body: "" });
