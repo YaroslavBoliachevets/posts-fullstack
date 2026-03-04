@@ -12,7 +12,7 @@ export default class PostService {
 		// 		},
 		// 	},
 		// );
-		const response = $api.get("/api/posts/all", [limit, page]);
+		const response = await $api.get("/api/posts/all", [limit, page]);
 		console.log(response.data);
 		return response;
 	}
@@ -37,6 +37,14 @@ export default class PostService {
 			const response = await $api.post("/api/posts/create", post);
 		} catch (error) {
 			console.log("create post error");
+		}
+	}
+
+	static async deletePost(id) {
+		try {
+			const response = await $api.delete(`/api/posts/${id}`);
+		} catch (error) {
+			console.log("delete post error");
 		}
 	}
 }

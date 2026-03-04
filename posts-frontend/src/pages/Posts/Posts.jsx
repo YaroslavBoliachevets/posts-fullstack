@@ -63,6 +63,7 @@ function Posts() {
 	};
 
 	const removePost = (post) => {
+		PostService.deletePost(post.id);
 		setPosts(posts.filter((p) => p.id !== post.id));
 	};
 
