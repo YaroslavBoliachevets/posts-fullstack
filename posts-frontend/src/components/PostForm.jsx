@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./PostForm.module.css";
 
 import Button from "./UI/button/Button";
 import Input from "./UI/input/Input";
 
+import { Context } from "../main";
+
 function PostForm({ create }) {
 	const [post, setPost] = useState({ title: "", body: "" });
+	const { store } = useContext(Context);
 
 	const addNewPosts = (e) => {
+		const email = store.user.email;
+		const userId = store.user.id;
 		e.preventDefault();
-		create({ ...post, id: Date.now() });
+		create({ ...post, id: Date.now(), email, userId });
 		setPost({ title: "", body: "" });
 	};
 

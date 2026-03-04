@@ -56,7 +56,8 @@ function Posts() {
 
 	const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query);
 
-	const createPost = (newPost) => {
+	const createPost = async (newPost) => {
+		PostService.createNewPost(newPost);
 		setPosts([newPost, ...posts]);
 		setModal(false);
 	};
