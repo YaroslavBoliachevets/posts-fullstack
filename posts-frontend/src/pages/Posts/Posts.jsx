@@ -25,7 +25,6 @@ function Posts() {
 
 	const [filter, setFilter] = useState({ sort: "", query: "" });
 	const [modal, setModal] = useState(false);
-	const [totalCount, setTotalCount] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
 	const [limit, setLimit] = useState(10);
 	const [page, setPage] = useState(1);
@@ -43,15 +42,14 @@ function Posts() {
 		setPosts([]);
 		setLimit(limit);
 		// при обновлении лимита страница прыгает на +1
-		setPage(0);
+		setPage(1);
 	};
 
 	const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
-		const responce = await PostService.getAll(limit, page);
-		setPosts([...posts, ...responce.data]);
-		setTotalCount(responce.headers["x-total-count"]);
-		const totalCount = responce.headers["x-total-count"];
-		setTotalPages(getPagesCount(totalCount, limit));
+		const response = await PostService.getAll(limit, page);
+		setPosts([...posts, ...response.data.posts]);
+		const totalPosts = response.data.totalPosts;
+		setTotalPages(getPagesCount(totalPosts, limit));
 	});
 
 	const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query);

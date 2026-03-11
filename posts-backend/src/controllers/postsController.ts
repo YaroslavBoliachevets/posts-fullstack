@@ -53,7 +53,8 @@ class PostsController {
 				take: currentLimit,
 				skip: offset,
 			});
-			return res.json(allPosts);
+			const totalPosts = await prisma.posts.count();
+			return res.json({ posts: allPosts, totalPosts });
 		} catch (e: any) {
 			next(ApiError.badRequest(e.message));
 		}

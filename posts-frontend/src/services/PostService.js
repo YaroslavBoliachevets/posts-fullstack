@@ -3,17 +3,9 @@ import { $api } from "../API/axios";
 
 export default class PostService {
 	static async getAll(limit = 10, page = 1) {
-		// const responce = await axios.get(
-		// 	"https://jsonplaceholder.typicode.com/posts",
-		// 	{
-		// 		params: {
-		// 			_limit: limit,
-		// 			_page: page,
-		// 		},
-		// 	},
-		// );
-		const response = await $api.get("/api/posts/all", [limit, page]);
-		console.log(response.data);
+		const response = await $api.get("/api/posts/all", {
+			params: { limit, page },
+		});
 		return response;
 	}
 
