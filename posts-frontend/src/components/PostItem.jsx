@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router";
 
 const PostItem = function (props) {
-	const { title, body, id } = props.post;
+	const { title, body, id, user } = props.post;
 	const { number, remove } = props;
 	const navigate = useNavigate();
 
@@ -26,11 +26,14 @@ const PostItem = function (props) {
 			}}
 			key={props.post.id}
 		>
-			<div>
-				<h5 className={styles.title}>
-					{number} {title}
-				</h5>
-				<p className={styles.body}>{body}</p>
+			<div className={styles.main}>
+				<div>
+					<h5 className={styles.title}>
+						{number} {title}
+					</h5>
+					<p className={styles.body}>{body}</p>
+				</div>
+				<p className={styles.name}>{user.email}</p>
 			</div>
 			<div className={styles.actions}>
 				<Button onClick={() => openPost(id)}>open</Button>

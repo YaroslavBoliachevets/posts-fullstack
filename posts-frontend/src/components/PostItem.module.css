@@ -11,6 +11,9 @@
 .post:hover {
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
+.main {
+	display: flex;
+}
 
 .title {
 	font-size: 18px;
@@ -24,6 +27,11 @@
 	color: #57606a;
 	margin-bottom: 12px;
 	line-height: 1.5;
+}
+
+.name {
+	color: #919191;
+	margin-left: auto;
 }
 
 .actions {

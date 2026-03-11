@@ -11,10 +11,9 @@ function PostForm({ create }) {
 	const { store } = useContext(Context);
 
 	const addNewPosts = (e) => {
-		const email = store.user.email;
 		const userId = store.user.id;
 		e.preventDefault();
-		create({ ...post, id: Date.now(), email, userId });
+		create({ ...post, id: Date.now(), userId });
 		setPost({ title: "", body: "" });
 	};
 

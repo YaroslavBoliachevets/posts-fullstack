@@ -49,6 +49,7 @@ function Posts() {
 		const response = await PostService.getAll(limit, page);
 		setPosts([...posts, ...response.data.posts]);
 		const totalPosts = response.data.totalPosts;
+		console.log(response.data);
 		setTotalPages(getPagesCount(totalPosts, limit));
 	});
 
