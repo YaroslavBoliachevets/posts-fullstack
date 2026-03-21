@@ -63,3 +63,14 @@
 .author {
 	margin-left: auto;
 }
+
+.meta {
+	margin-top: 8px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.comments {
+	font-size: 12px;
+	color: #666;
+}

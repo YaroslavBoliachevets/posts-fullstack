@@ -61,6 +61,9 @@ class PostsController {
 							email: true,
 						},
 					},
+					_count: {
+						select: { comments: true },
+					},
 				},
 			});
 			const totalPosts = await prisma.posts.count();

@@ -9,7 +9,7 @@ import { useContext } from "react";
 import clsx from "clsx";
 
 const PostItem = function (props) {
-	const { title, body, id, user } = props.post;
+	const { title, body, id, user, _count } = props.post;
 	const { number, remove } = props;
 	const navigate = useNavigate();
 
@@ -58,6 +58,11 @@ const PostItem = function (props) {
 				>
 					delete
 				</Button>
+			</div>
+			<div className={styles.meta}>
+				<span className={styles.comments}>
+					total comments:{_count?.comments ?? 0}
+				</span>
 			</div>
 		</motion.div>
 	);
