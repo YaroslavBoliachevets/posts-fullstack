@@ -35,34 +35,40 @@ const PostItem = function (props) {
 			key={props.post.id}
 			onClick={() => openPost(id)}
 		>
-			<div className={styles.main}>
-				<div>
-					<h5 className={styles.title}>
-						{number} {title}
-					</h5>
-					<p className={styles.body}>{body}</p>
+			<div className={styles.post1}>
+				<div className={styles.main}>
+					<div>
+						<h5 className={styles.title}>
+							{number} {title}
+						</h5>
+						<p className={styles.body}>{body}</p>
+					</div>
+					<div className={styles.author}>
+						{user?.email === store.user.email ? (
+							<span className={styles.badge}>your post</span>
+						) : (
+							<span className={styles.email}>{user?.email}</span>
+						)}
+					</div>
 				</div>
-				<div className={styles.author}>
-					{user?.email === store.user.email ? (
-						<span className={styles.badge}>your post</span>
-					) : (
-						<span className={styles.email}>{user?.email}</span>
-					)}
+				<div className={styles.actions}>
+					<Button onClick={() => openPost(id)}>open</Button>
+					<Button
+						onClick={() => remove(props.post)}
+						disabled={store.isGuest || store.user?.email != user?.email}
+					>
+						delete
+					</Button>
 				</div>
 			</div>
-			<div className={styles.actions}>
-				<Button onClick={() => openPost(id)}>open</Button>
-				<Button
-					onClick={() => remove(props.post)}
-					disabled={store.isGuest || store.user?.email != user?.email}
-				>
-					delete
-				</Button>
-			</div>
-			<div className={styles.meta}>
-				<span className={styles.comments}>
-					total comments:{_count?.comments ?? 0}
-				</span>
+			<div className={styles.commentsBlock}>
+				{_count?.comments > 0 ? (
+					<span className={styles.comments}>
+						total comments:{_count?.comments ?? 0}
+					</span>
+				) : (
+					<span className={styles.comments}>leave a comment</span>
+				)}
 			</div>
 		</motion.div>
 	);

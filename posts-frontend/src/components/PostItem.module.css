@@ -3,10 +3,14 @@
 	background-color: #fff;
 	border: 1px solid #e1e4e8;
 	border-radius: 8px;
-	padding: 16px 20px;
+
 	margin-bottom: 16px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 	transition: box-shadow 0.2s;
+}
+
+.post1 {
+	padding: 16px 20px;
 }
 
 .post:hover {
@@ -41,12 +45,11 @@
 }
 
 .myPost {
-	background-color: #e8fff5;
-	border-left: 4px solid teal;
+	border-left: 4px solid #00897b;
 }
 
 .badge {
-	background-color: teal;
+	background-color: #00695c;
 	color: white;
 	padding: 2px 6px;
 	border-radius: 4px;
@@ -64,13 +67,16 @@
 	margin-left: auto;
 }
 
-.meta {
+.commentsBlock {
+	background-color: #eceff1;
+	color: #455a64;
 	margin-top: 8px;
 	display: flex;
 	justify-content: flex-end;
+	padding: 8px 20px;
 }
 
 .comments {
 	font-size: 12px;
-	color: #666;
+	color: #00897b;
 }
