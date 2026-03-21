@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "../../styles/App.css";
 import styles from "./Posts.module.css";
 import clsx from "clsx";
@@ -18,6 +18,7 @@ import Loader from "../../components/UI/loader/Loader";
 
 import { getPagesCount, getPagesArray } from "../../utils/pages";
 import { useObserver } from "../../hooks/useObserver";
+import { Context } from "../../main";
 import Select from "../../components/UI/select/Select";
 
 function Posts() {
@@ -28,6 +29,7 @@ function Posts() {
 	const [totalPages, setTotalPages] = useState(0);
 	const [limit, setLimit] = useState(10);
 	const [page, setPage] = useState(1);
+	const { store } = useContext(Context);
 	// находим последний эл чтобы при его появлении подгружать новые посты (для инфинити скролла)
 	const lastElement = useRef();
 
@@ -84,7 +86,9 @@ function Posts() {
 			<div>
 				<div className="background-wrap">
 					<div className={clsx("container", styles.toolbar)}>
-						<Button onClick={() => setModal(true)}>create post</Button>
+						<Button onClick={() => setModal(true)} disabled={store.isGuest}>
+							create post
+						</Button>
 						<Modal visible={modal} setVisible={setModal}>
 							<PostForm create={createPost} />
 						</Modal>

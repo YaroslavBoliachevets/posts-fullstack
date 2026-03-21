@@ -22,9 +22,21 @@
 	gap: 16px;
 }
 
+.wrapped {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
 .actions {
 	display: flex;
-	justify-content: start;
 	gap: 12px;
-	margin-top: 12px;
+}
+
+.guest {
+	width: 55%;
+	text-align: center;
+
+	background-color: #b5b5b5;
+	color: #f0f0f0;
 }

@@ -8,6 +8,7 @@ export default class Store {
 	user = {} as IUser;
 	isAuth = false;
 	isLoading = false;
+	isGuest = false;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -26,9 +27,10 @@ export default class Store {
 
 	async login(email: string, password: string) {
 		try {
+			this.isGuest = false;
 			this.setIsLoading(true);
 			const responce = await AuthService.login(email, password);
-			console.log("store login responce", responce);
+			// console.log("store login responce", responce);
 			localStorage.setItem("token", responce.data.accessToken);
 			this.setAuth(true);
 			this.setUser(responce.data.user);
@@ -83,5 +85,12 @@ export default class Store {
 		} finally {
 			this.setIsLoading(false);
 		}
+	}
+
+	async loginGuest() {
+		this.setIsLoading(true);
+		this.isGuest = true;
+		localStorage.setItem("guest", "true");
+		this.setIsLoading(false);
 	}
 }

@@ -19,16 +19,18 @@ function Login() {
 	const login = async (e) => {
 		e.preventDefault();
 		await store.login(email, password);
-		// const userData = { email, password };
-		// setIsAuth(!isAuth);
-		// localStorage.setItem("auth", "true");
 		navigate("/posts");
 	};
 
 	const registration = async (e) => {
 		e.preventDefault();
-		// console.log("registration");
 		await store.registration(email, password);
+	};
+
+	const guest = (e) => {
+		e.preventDefault();
+		store.loginGuest();
+		navigate("/about");
 	};
 
 	return (
@@ -48,9 +50,15 @@ function Login() {
 						placeholder="password"
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<div className={styles.actions}>
-						<Button onClick={(e) => login(e)}>login</Button>
-						<Button onClick={(e) => registration(e)}>registration</Button>
+
+					<div className={styles.wrapped}>
+						<div className={styles.actions}>
+							<Button onClick={(e) => login(e)}>login</Button>
+							<Button onClick={(e) => registration(e)}>registration</Button>
+						</div>
+						<Button className={styles.guest} onClick={(e) => guest(e)}>
+							continue as a guest
+						</Button>
 					</div>
 				</form>
 			</div>

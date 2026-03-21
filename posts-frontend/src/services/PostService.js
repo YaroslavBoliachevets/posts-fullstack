@@ -3,9 +3,13 @@ import { $api } from "../API/axios";
 
 export default class PostService {
 	static async getAll(limit = 10, page = 1) {
-		const response = await $api.get("/api/posts/all", {
-			params: { limit, page },
-		});
+		// const response = await $api.get("/api/posts/all", {
+		// 	params: { limit, page },
+		// });
+		const response = await axios.get(
+			`${import.meta.env.VITE_API_URL}/api/posts/all`,
+			{ params: { limit, page } },
+		);
 		return response;
 	}
 

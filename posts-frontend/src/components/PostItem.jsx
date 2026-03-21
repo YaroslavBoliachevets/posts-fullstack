@@ -4,11 +4,15 @@ import Button from "./UI/button/Button";
 import { motion, AnimatePresence } from "motion/react";
 // для создания динамической навигации, каждый пост - своя ссылка
 import { useNavigate } from "react-router";
+import { Context } from "../main";
+import { useContext } from "react";
 
 const PostItem = function (props) {
 	const { title, body, id, user } = props.post;
 	const { number, remove } = props;
 	const navigate = useNavigate();
+
+	const { store } = useContext(Context);
 
 	const openPost = (id) => {
 		navigate(`/posts/${id}`);
@@ -37,7 +41,9 @@ const PostItem = function (props) {
 			</div>
 			<div className={styles.actions}>
 				<Button onClick={() => openPost(id)}>open</Button>
-				<Button onClick={() => remove(props.post)}>delete</Button>
+				<Button onClick={() => remove(props.post)} disabled={store.isGuest}>
+					delete
+				</Button>
 			</div>
 		</motion.div>
 	);

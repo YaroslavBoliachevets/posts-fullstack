@@ -63,7 +63,9 @@ function PostIdPage() {
 							value={comment}
 							onChange={(e) => setComment(e.target.value)}
 						></Input>
-						<Button onClick={addNewComment}>send</Button>
+						<Button onClick={addNewComment} disabled={store.isGuest}>
+							send
+						</Button>
 					</form>
 				</div>
 

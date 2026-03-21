@@ -13,26 +13,41 @@ function AppRouter() {
 	// const { isAuth, isLoading } = useContext(AuthContext);
 	const { store } = useContext(Context);
 	useEffect(() => {
-		console.log(store, "store");
+		if (localStorage.getItem("guest") === "true") {
+			store.isGuest = true;
+			return;
+		}
+
+		// console.log(store, "store");
 		if (localStorage.getItem("token")) {
 			store.checkAuth();
 		}
-		// setIsLoading(false);
 	}, []);
 
 	if (store.isLoading) {
 		return <Loader />;
 	}
+
+	// ================================================================
 	// в зависимости от переменной isAuth будут доступны приватные или публичные пути, в публичном только авторизация
-	return store.isAuth ? (
+	// return store.isAuth ? (
+	// 	<Routes>
+	// 		{privateRoutes.map(({ path, element }) => {
+	// 			return <Route key={path} path={path} element={element} />;
+	// 		})}
+	// 	</Routes>
+	// ) : (
+	// 	<Routes>
+	// 		{publicRoutes.map(({ path, element }) => {
+	// 			return <Route key={path} path={path} element={element} />;
+	// 		})}
+	// 	</Routes>
+	// );
+	// ==========================================================
+
+	return (
 		<Routes>
 			{privateRoutes.map(({ path, element }) => {
-				return <Route key={path} path={path} element={element} />;
-			})}
-		</Routes>
-	) : (
-		<Routes>
-			{publicRoutes.map(({ path, element }) => {
 				return <Route key={path} path={path} element={element} />;
 			})}
 		</Routes>
