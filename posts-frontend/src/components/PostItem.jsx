@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router";
 import { Context } from "../main";
 import { useContext } from "react";
+import clsx from "clsx";
 
 const PostItem = function (props) {
 	const { title, body, id, user } = props.post;
@@ -21,7 +22,10 @@ const PostItem = function (props) {
 	return (
 		// motion для стилизации появления/удаления просто обертка
 		<motion.div
-			className={styles.post}
+			className={clsx(
+				styles.post,
+				user?.email === store.user.email && styles.myPost,
+			)}
 			initial={{ transform: "translateX(-300px)" }}
 			animate={{ transform: "translateX(0px)" }}
 			exit={{ transform: "translateX(100px)", opacity: 0 }}
@@ -29,6 +33,7 @@ const PostItem = function (props) {
 				default: { type: "spring", duration: 1 },
 			}}
 			key={props.post.id}
+			onClick={() => openPost(id)}
 		>
 			<div className={styles.main}>
 				<div>
@@ -37,11 +42,20 @@ const PostItem = function (props) {
 					</h5>
 					<p className={styles.body}>{body}</p>
 				</div>
-				<p className={styles.name}>{user?.email}</p>
+				<div className={styles.author}>
+					{user?.email === store.user.email ? (
+						<span className={styles.badge}>your post</span>
+					) : (
+						<span className={styles.email}>{user?.email}</span>
+					)}
+				</div>
 			</div>
 			<div className={styles.actions}>
 				<Button onClick={() => openPost(id)}>open</Button>
-				<Button onClick={() => remove(props.post)} disabled={store.isGuest}>
+				<Button
+					onClick={() => remove(props.post)}
+					disabled={store.isGuest || store.user?.email != user?.email}
+				>
 					delete
 				</Button>
 			</div>
