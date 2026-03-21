@@ -28,6 +28,8 @@ export default class Store {
 	async login(email: string, password: string) {
 		try {
 			this.isGuest = false;
+			localStorage.removeItem("guest");
+
 			this.setIsLoading(true);
 			const responce = await AuthService.login(email, password);
 			// console.log("store login responce", responce);
@@ -44,8 +46,9 @@ export default class Store {
 	async registration(email: string, password: string) {
 		try {
 			this.setIsLoading(true);
+			localStorage.removeItem("guest");
 			const responce = await AuthService.registration(email, password);
-			console.log("store registration responce", responce);
+			// console.log("store registration responce", responce);
 			localStorage.setItem("token", responce.data.accessToken);
 			this.setAuth(true);
 			this.setUser(responce.data.user);
@@ -61,6 +64,7 @@ export default class Store {
 			this.setIsLoading(true);
 			const responce = await AuthService.logout();
 			localStorage.removeItem("token");
+			localStorage.removeItem("guest");
 			this.setAuth(false);
 			this.setUser({} as IUser);
 		} catch (e: any) {
