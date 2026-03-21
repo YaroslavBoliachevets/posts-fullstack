@@ -9,6 +9,7 @@ class PostsController {
 			const { title, body, userId } = req.body;
 			const newPost = await prisma.posts.create({
 				data: { title, body, userId },
+				include: { user: { select: { email: true } } },
 			});
 			return res.json(newPost);
 		} catch (e: any) {

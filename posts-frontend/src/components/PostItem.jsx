@@ -33,7 +33,7 @@ const PostItem = function (props) {
 					</h5>
 					<p className={styles.body}>{body}</p>
 				</div>
-				<p className={styles.name}>{user.email}</p>
+				<p className={styles.name}>{user?.email}</p>
 			</div>
 			<div className={styles.actions}>
 				<Button onClick={() => openPost(id)}>open</Button>

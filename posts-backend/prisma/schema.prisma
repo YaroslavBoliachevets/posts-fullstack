@@ -25,6 +25,7 @@ model User {
   activationLink String 
 
   posts     Posts[]
+  comments  Comment[]
   token Token?
 }
 
@@ -41,12 +42,13 @@ model Posts {
 
 model Comment {
   id          Int @id @default(autoincrement())
-  name        String
-  email       String
   body        String
 
   postId      Int
-  post        Posts @relation(fields:[postId], references:[id])
+  post        Posts @relation(fields:[postId], references:[id] onDelete:Cascade)
+
+  userId      Int
+  user        User @relation(fields:[userId], references:[id])
 }
 
 model Token {

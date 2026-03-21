@@ -13,7 +13,7 @@ function PostForm({ create }) {
 	const addNewPosts = (e) => {
 		const userId = store.user.id;
 		e.preventDefault();
-		create({ ...post, id: Date.now(), userId });
+		create({ ...post, userId });
 		setPost({ title: "", body: "" });
 	};
 

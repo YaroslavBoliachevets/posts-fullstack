@@ -49,20 +49,19 @@ function Posts() {
 		const response = await PostService.getAll(limit, page);
 		setPosts([...posts, ...response.data.posts]);
 		const totalPosts = response.data.totalPosts;
-		console.log(response.data);
 		setTotalPages(getPagesCount(totalPosts, limit));
 	});
 
 	const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query);
 
 	const createPost = async (newPost) => {
-		PostService.createNewPost(newPost);
-		setPosts([newPost, ...posts]);
+		const response = await PostService.createNewPost(newPost);
+		setPosts([response.data, ...posts]);
 		setModal(false);
 	};
 
-	const removePost = (post) => {
-		PostService.deletePost(post.id);
+	const removePost = async (post) => {
+		await PostService.deletePost(post.id);
 		setPosts(posts.filter((p) => p.id !== post.id));
 	};
 

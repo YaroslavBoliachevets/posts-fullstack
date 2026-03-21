@@ -10,23 +10,14 @@ export default class PostService {
 	}
 
 	static async getById(id) {
-		// const responce = await axios.get(
-		// 	"https://jsonplaceholder.typicode.com/posts/" + id,
-		// );
 		const response = $api.get(`/api/posts/${id}`);
 		return response;
-	}
-	static async getCommentsById(id) {
-		const responce = await axios.get(
-			`https://jsonplaceholder.typicode.com/posts/${id}/comments`,
-		);
-		console.log(responce);
-		return responce;
 	}
 
 	static async createNewPost(post) {
 		try {
 			const response = await $api.post("/api/posts/create", post);
+			return response;
 		} catch (error) {
 			console.log("create post error");
 		}
