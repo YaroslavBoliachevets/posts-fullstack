@@ -5,16 +5,20 @@ import Button from "./UI/button/Button";
 import Input from "./UI/input/Input";
 
 import { Context } from "../main";
+import { form } from "motion/react-client";
 
-function PostForm({ create }) {
-	const [post, setPost] = useState({ title: "", body: "" });
+function PostForm({ change, buttonName, formPost = {} }) {
+	const [post, setPost] = useState({
+		title: formPost.title ?? "",
+		body: formPost.body ?? "",
+		...formPost,
+	});
 	const { store } = useContext(Context);
 
-	const addNewPosts = (e) => {
+	const changePost = (e) => {
 		const userId = store.user.id;
 		e.preventDefault();
-		create({ ...post, userId });
-		setPost({ title: "", body: "" });
+		change({ ...post, userId });
 	};
 
 	return (
@@ -33,7 +37,7 @@ function PostForm({ create }) {
 				type="text"
 				placeholder="Post article"
 			/>
-			<Button onClick={addNewPosts}>create post</Button>
+			<Button onClick={changePost}>{buttonName}</Button>
 		</form>
 	);
 }

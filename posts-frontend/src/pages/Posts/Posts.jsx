@@ -67,6 +67,12 @@ function Posts() {
 		setPosts(posts.filter((p) => p.id !== post.id));
 	};
 
+	const updatePostInState = (updatedPost) => {
+		setPosts((prev) =>
+			prev.map((p) => (p.id === updatedPost.id ? updatedPost : p)),
+		);
+	};
+
 	useObserver(
 		lastElement,
 		page < totalPages && posts.length > 0,
@@ -90,7 +96,7 @@ function Posts() {
 							create post
 						</Button>
 						<Modal visible={modal} setVisible={setModal}>
-							<PostForm create={createPost} />
+							<PostForm change={createPost} buttonName={"create post"} />
 						</Modal>
 
 						<div className={styles.controls}>
@@ -122,6 +128,7 @@ function Posts() {
 							posts={sortedAndSearchPosts}
 							title="Posts"
 							remove={removePost}
+							update={updatePostInState}
 						/>
 						{/* ref={lastElement} автоматически кладет в коробку lastElement.current =  наш div
 						 */}

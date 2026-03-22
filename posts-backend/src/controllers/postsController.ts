@@ -29,7 +29,7 @@ class PostsController {
 					body,
 				},
 			});
-			return updatedPost;
+			return res.json(updatedPost);
 		} catch (e: any) {
 			next(ApiError.badRequest(e.message));
 		}

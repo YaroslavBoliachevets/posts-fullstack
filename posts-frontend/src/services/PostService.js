@@ -34,4 +34,13 @@ export default class PostService {
 			console.log("delete post error");
 		}
 	}
+
+	static async updatePost(post) {
+		try {
+			const response = await $api.put(`/api/posts/${post.id}`, post);
+			return response;
+		} catch (error) {
+			console.log("update post error", error.message);
+		}
+	}
 }
