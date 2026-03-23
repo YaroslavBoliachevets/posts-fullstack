@@ -9,9 +9,11 @@ import Button from "../../components/UI/button/Button";
 import { Context } from "../../main";
 import CommentService from "../../services/CommentService";
 import CommentForm from "../../components/UI/commentForm/CommentForm";
+import { div } from "motion/react-client";
 
 function PostIdPage() {
 	const { store } = useContext(Context);
+	// console.log(store.user.email, "store");
 	// хук для получания параметра из динамически созданого url /posts/:id
 	const { id } = useParams();
 	const [post, setPost] = useState({});
@@ -66,29 +68,47 @@ function PostIdPage() {
 
 	return (
 		<div className="container">
-			<div className={styles.postInfo}>
-				<h1 className={styles.title}>{post.title}</h1>
+			<div className={styles.wrap}>
+				<div className={styles.postSection}>
+					<h1 className={styles.title}>{post.title}</h1>
 
-				{isLoading ? <Loader /> : <div>{post.body}</div>}
+					{isLoading ? (
+						<Loader />
+					) : (
+						<div className={styles.postBody}>{post.body}</div>
+					)}
+				</div>
 
 				{isComLoading ? (
 					<Loader />
 				) : (
-					<div className={styles.comments}>
-						{comments == 0 && <h2>No comments here yet...</h2>}
+					<div className={styles.commentsSection}>
+						{comments == 0 && (
+							<h2 className={styles.noComments}>No comments here yet...</h2>
+						)}
 						{comments.map((comment) => {
 							return (
 								<div className={styles.comment} key={comment.id}>
 									<div className={styles.meta}>
-										<span className={styles.email}>{comment.user.email}</span>
+										{store.user.email == comment.user.email ? (
+											<span className={styles.badge}>your comment</span>
+										) : (
+											<span className={styles.email}>{comment.user.email}</span>
+										)}
 									</div>
 									<div className={styles.body}>{comment.body}</div>
-									<Button onClick={() => deleteComment(id)} disabled={store.isGuest}>
-										delete
-									</Button>
-									<Button onClick={() => setComment(comment)} disabled={store.isGuest}>
-										upd
-									</Button>
+									{store.user.email == comment.user.email ? (
+										<div className={styles.actions}>
+											<Button onClick={() => deleteComment(id)} disabled={store.isGuest}>
+												delete
+											</Button>
+											<Button onClick={() => setComment(comment)} disabled={store.isGuest}>
+												upd
+											</Button>
+										</div>
+									) : (
+										""
+									)}
 								</div>
 							);
 						})}

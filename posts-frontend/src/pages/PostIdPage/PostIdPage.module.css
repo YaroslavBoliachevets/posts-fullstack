@@ -1,28 +1,76 @@
-.postInfo {
-	background-color: #fff;
+.wrap {
+	/* background-color: #ffffff;
 	border: 1px solid #e1e4e8;
 	border-radius: 8px;
 	padding: 20px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 	margin: 24px auto;
-	/* width: 80%; */
-	display: block;
+	display: block; */
+
+	max-width: 800px;
+	margin: 40px auto;
+	padding: 0 20px;
+}
+
+/* ======POST======= */
+.postSection {
+	margin-bottom: 40px;
 }
 
 .title {
+	font-size: 32px;
+	font-weight: 700;
+	margin-bottom: 20px;
+}
+
+/* .title {
 	font-style: 20px;
 	font-weight: 600;
 	margin-bottom: 16px;
 	color: #24292f;
+} */
+
+.postBody {
+	font-size: 18px;
+	line-height: 1.6;
+	color: #333;
 }
 
-.comments {
-	margin-top: 24px;
+/* =====COMMENTS======= */
+
+.commentsSection {
+	margin-top: 40px;
 }
+
+.commentsTitle {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+.noComments {
+	text-align: center;
+	font-size: 18px;
+	color: #777;
+	min-height: 150px; /* растягиваем секцию */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: #fafafa;
+	border: 1px solid #eee;
+	border-radius: 10px;
+	padding: 40px;
+	margin-bottom: 20px;
+}
+
+/* =======Comment card===== */
 
 .comment {
-	border-top: 1px solid #eee;
-	padding: 16px 0;
+	background: #f7f7f7;
+	padding: 16px;
+	border-radius: 10px;
+	margin-bottom: 16px;
+	border: 1px solid #e0e0e0;
 }
 
 .comment:first-child {
@@ -30,26 +78,42 @@
 }
 
 .meta {
-	display: flex;
+	/* display: flex;
 	justify-content: space-between;
 	margin-bottom: 6px;
 	font-size: 14px;
-	color: #57606a;
+	color: #57606a; */
+
+	margin-bottom: 8px;
+}
+
+.badge {
+	display: inline-block;
+	padding: 2px 8px;
+	font-size: 11px;
+	font-weight: 600;
+	background: #e0f2ff;
+	color: #0077cc;
+	border-radius: 6px;
+	margin-bottom: 6px;
 }
 
 .email {
-	font-weight: 500;
-	font-style: italic;
-	color: #6e7781;
+	font-size: 14px;
+	font-weight: 600;
+	color: #555;
 }
 
 .body {
-	font-size: 14px;
+	/* font-size: 14px;
 	line-height: 1.5;
-	color: #2f363d;
+	color: #2f363d; */
+
+	font-size: 16px;
+	margin-bottom: 12px;
 }
 
-.comments {
-	padding: 0;
-	/* background-color: red; */
+.actions {
+	display: flex;
+	gap: 10px;
 }

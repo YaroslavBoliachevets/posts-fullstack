@@ -1,3 +1,16 @@
 .wrap {
-	padding: 0;
+	margin-top: 30px;
+	padding: 20px;
+	background: #fafafa;
+	border-radius: 10px;
+	border: 1px solid #e0e0e0;
+}
+
+form {
+	display: flex;
+	gap: 10px;
+}
+
+input {
+	flex: 1;
 }
