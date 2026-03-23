@@ -15,4 +15,21 @@ export default class CommentService {
 			console.log("create comment error", e);
 		}
 	}
+	static async delete(id: number) {
+		try {
+			const response = await $api.delete(`/api/comments/${id}`);
+			return response;
+		} catch (error: any) {
+			console.log("comServ del error", error.message);
+		}
+	}
+
+	static async update(comment: ICommentCreate) {
+		try {
+			const response = await $api.put(`/api/comments/${comment.id}`, comment);
+			return response;
+		} catch (error: any) {
+			console.log("comServ upd error", error.message);
+		}
+	}
 }

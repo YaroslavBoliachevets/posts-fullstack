@@ -48,3 +48,8 @@
 	line-height: 1.5;
 	color: #2f363d;
 }
+
+.comments {
+	padding: 0;
+	/* background-color: red; */
+}

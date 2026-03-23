@@ -32,6 +32,32 @@ class CommentController {
 			next(ApiError.badRequest(e.message));
 		}
 	}
+
+	async updateComment(req: Request, res: Response, next: NextFunction) {
+		try {
+			const id = Number(req.params.id);
+			const { body } = req.body;
+			const updatedComment = await prisma.comment.update({
+				where: { id },
+				data: {
+					body,
+				},
+			});
+			return res.json(updatedComment);
+		} catch (e: any) {
+			console.log("update comment error", next(ApiError.badRequest(e.message)));
+		}
+	}
+
+	async deleteComment(req: Request, res: Response, next: NextFunction) {
+		try {
+			const id = Number(req.params.id);
+			const deletedPost = await prisma.comment.delete({ where: { id: id } });
+			return res.json(deletedPost);
+		} catch (e: any) {
+			console.log("delete comment error", next(ApiError.badRequest(e.message)));
+		}
+	}
 }
 
 export default new CommentController();
