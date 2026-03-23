@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import styles from "./PostIdPage.module.css";
 import { useParams } from "react-router-dom";
 import useFetching from "../../hooks/useFetching";
 import PostService from "../../services/PostService";
 import Loader from "../../components/UI/loader/Loader";
-import Input from "../../components/UI/input/Input";
 import Button from "../../components/UI/button/Button";
 import { Context } from "../../main";
 import CommentService from "../../services/CommentService";
 import CommentForm from "../../components/UI/commentForm/CommentForm";
-import { div } from "motion/react-client";
 
 function PostIdPage() {
 	const { store } = useContext(Context);
@@ -45,10 +43,14 @@ function PostIdPage() {
 	async function addNewComment(comment) {
 		const userId = store.user.id;
 		const postId = Number(id);
-		const newComment = { body: comment, postId, userId };
-		await CommentService.create(newComment);
+		const newComment = await CommentService.create({
+			body: comment,
+			postId,
+			userId,
+		});
+		setComments((prev) => [...prev, newComment.data]);
+		shouldScroll.current = true;
 		setComment("");
-		fetchComments(id);
 	}
 
 	async function deleteComment(id) {
@@ -59,11 +61,7 @@ function PostIdPage() {
 	async function updateComment(comment) {
 		await CommentService.update(comment);
 		setComments((prev) => prev.map((p) => (p.id == comment.id ? comment : p)));
-	}
-
-	async function updateClick(body) {
-		console.log(body);
-		// setComment(body);
+		setComment(null);
 	}
 
 	return (
@@ -99,7 +97,10 @@ function PostIdPage() {
 									<div className={styles.body}>{comment.body}</div>
 									{store.user.email == comment.user.email ? (
 										<div className={styles.actions}>
-											<Button onClick={() => deleteComment(id)} disabled={store.isGuest}>
+											<Button
+												onClick={() => deleteComment(comment.id)}
+												disabled={store.isGuest}
+											>
 												delete
 											</Button>
 											<Button onClick={() => setComment(comment)} disabled={store.isGuest}>

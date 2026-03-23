@@ -26,6 +26,7 @@ class CommentController {
 			const { body, userId, postId } = req.body;
 			const newComment = await prisma.comment.create({
 				data: { body, userId, postId },
+				include: { user: { select: { email: true } } },
 			});
 			return res.json(newComment);
 		} catch (e: any) {
