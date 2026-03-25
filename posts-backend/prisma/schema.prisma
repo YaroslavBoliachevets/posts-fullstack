@@ -45,7 +45,7 @@ model Comment {
   body        String
 
   postId      Int
-  post        Posts @relation(fields:[postId], references:[id] onDelete:Cascade)
+  post        Posts @relation(fields:[postId], references:[id], onDelete:Cascade)
 
   userId      Int
   user        User @relation(fields:[userId], references:[id])
