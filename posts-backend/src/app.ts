@@ -15,6 +15,7 @@ app.use(cookieParser());
 // CORS
 const allowedOrigins = [
 	"https://posts-fullstack-c9b7.onrender.com",
+	"https://posts-fullstack.onrender.com",
 	"http://localhost:5173",
 	"http://localhost:7000",
 	// process.env.CLIENT_URL,
