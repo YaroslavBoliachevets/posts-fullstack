@@ -2,30 +2,54 @@ import "dotenv/config";
 import prisma from "./prisma/client";
 import express from "express";
 import ErrorHandler from "./middleware/ErrorHandlingMiddleware";
-
-const cors = require("cors");
+import cors from "cors";
+// const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const app = express();
 
+//чтобы парсить json формат
+app.use(express.json());
+app.use(cookieParser());
+
+// CORS
 const allowedOrigins = [
+	"https://posts-fullstack-c9b7.onrender.com",
 	"http://localhost:5173",
 	"http://localhost:7000",
-	process.env.CLIENT_URL,
+	// process.env.CLIENT_URL,
 ];
 
-app.use(cors({ origin: allowedOrigins, credentials: true }));
+// работает, но заменил
+// app.use(cors({ origin: allowedOrigins, credentials: true }));
+// проверяю как работает
+app.use(
+	cors({
+		credentials: true,
+		origin: (origin, callback) => {
+			if (!origin) return callback(null, true); // для Postman
+			if (allowedOrigins.includes(origin)) return callback(null, true);
+			return callback(new Error("Not allowed by CORS"));
+		},
+	}),
+);
 
 // и добавляем заголовок вручную вдруг експресс что-то не понравится
 app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Credentials", "true");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept, Authorization",
+	);
+	res.header(
+		"Access-Control-Allow-Methods",
+		"GET, POST, PUT, PATCH, DELETE, OPTIONS",
+	);
+	res.header("Access-Control-Allow-Origin", req.headers.origin);
 	next();
 });
 
-app.use(cookieParser());
-//чтобы парсить json формат
-app.use(express.json());
-
+// роуты
 const router = require("./routes/index");
 app.use("/api", router);
 
