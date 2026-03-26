@@ -52,12 +52,10 @@ const PostItem = function (props) {
 				key={props.post.id}
 				onClick={() => openPost(id)}
 			>
-				<div className={styles.post1}>
+				<div className={styles.postInfo}>
 					<div className={styles.main}>
 						<div>
-							<h5 className={styles.title}>
-								{number} {title}
-							</h5>
+							<h5 className={styles.title}>{title}</h5>
 							<p className={styles.body}>{body}</p>
 						</div>
 						<div className={styles.author}>
@@ -69,7 +67,7 @@ const PostItem = function (props) {
 						</div>
 					</div>
 					<div className={styles.actions}>
-						<Button onClick={() => openPost(id)}>open</Button>
+						{/* <Button onClick={() => openPost(id)}>open</Button>
 
 						<Button
 							onClick={(e) => {
@@ -88,7 +86,7 @@ const PostItem = function (props) {
 							disabled={store.isGuest || store.user?.email != user?.email}
 						>
 							delete
-						</Button>
+						</Button> */}
 					</div>
 				</div>
 				<div className={styles.commentsBlock}>
