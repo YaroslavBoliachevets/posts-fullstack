@@ -1,42 +1,75 @@
 .loginPage {
 	max-width: 400px;
-	margin: 60px auto;
-	padding: 32px;
+	margin: 40px auto;
+	padding: var(--space-xs);
 
-	background-color: #fff;
-	border: 1px solid teal;
-	border-radius: 12px;
+	background-color: var(--color-bg);
+	border: 1px solid var(--color-primary);
+	border-radius: var(--radius);
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.006);
 }
 
 .title {
-	font-size: 22px;
+	font-size: var(--font-size-large);
 	font-weight: 600;
 	margin-bottom: 24px;
-	color: #24292f;
+	color: var(--color-text);
+	text-align: center;
 }
 
 .form {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: var(--space-md);
 }
 
 .wrapped {
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	gap: var(--space-sm);
 }
 
 .actions {
 	display: flex;
-	gap: 12px;
+	justify-content: center;
+	gap: var(--space-sm);
+}
+
+.login {
+	width: 50%;
 }
 
 .guest {
-	width: 55%;
+	width: 100%;
 	text-align: center;
 
-	background-color: #b5b5b5;
-	color: #f0f0f0;
+	background-color: var(--color-secondary);
+	color: var(--color-bg);
+	transition: background-color var(--transition);
+}
+
+.guest:hover {
+	background-color: var(--color-primary-dark);
+}
+
+/*  Mob */
+@media (max-width: 767px) {
+	.loginPage {
+		margin: 60px auto;
+	}
+}
+
+/*  Tab */
+@media (min-width: 768px) and (max-width: 1023px) {
+	.loginPage {
+		margin: 60px auto;
+		padding: var(--space-md);
+	}
+}
+
+/*  Desk */
+@media (min-width: 1024px) {
+	.loginPage {
+		padding: calc(var(--space-lg) * 1.5);
+	}
 }

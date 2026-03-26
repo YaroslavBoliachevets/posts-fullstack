@@ -53,8 +53,12 @@ function Login() {
 
 					<div className={styles.wrapped}>
 						<div className={styles.actions}>
-							<Button onClick={(e) => login(e)}>login</Button>
-							<Button onClick={(e) => registration(e)}>registration</Button>
+							<Button className={styles.login} onClick={(e) => login(e)}>
+								login
+							</Button>
+							<Button className={styles.login} onClick={(e) => registration(e)}>
+								registration
+							</Button>
 						</div>
 						<Button className={styles.guest} onClick={(e) => guest(e)}>
 							continue as a guest
