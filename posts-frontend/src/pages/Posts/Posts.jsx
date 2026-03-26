@@ -89,15 +89,15 @@ function Posts() {
 
 	return (
 		<>
-			<div>
-				<div className="background-wrap">
-					<div className={clsx("container", styles.toolbar)}>
+			<div className="container">
+				<div>
+					<div className={styles.toolbar}>
 						<Button onClick={() => setModal(true)} disabled={store.isGuest}>
 							create post
 						</Button>
-						<Modal visible={modal} setVisible={setModal}>
+						{/* <Modal visible={modal} setVisible={setModal}>
 							<PostForm change={createPost} buttonName={"create post"} />
-						</Modal>
+						</Modal> */}
 
 						<div className={styles.controls}>
 							<PostFilter
@@ -106,6 +106,7 @@ function Posts() {
 								setFilter={setFilter}
 							/>
 							<Select
+								className={styles.filter}
 								value={limit}
 								onChange={(value) => changeLimit(value)}
 								defaultValue={"posts per page"}
@@ -121,8 +122,8 @@ function Posts() {
 				</div>
 				{postError && <h1>An error has occurred {postError}</h1>}
 
-				<div className="background-wrap">
-					<div className="container">
+				<div className={styles.backgroundWrap}>
+					<div className={styles.container}>
 						<PostList
 							className={styles.postlist}
 							posts={sortedAndSearchPosts}

@@ -2,10 +2,17 @@ import React from "react";
 import clsx from "clsx";
 import styles from "./Select.module.css";
 
-function Select({ options, defaultValue, value, onChange, ...porps }) {
+function Select({
+	options,
+	defaultValue,
+	value,
+	onChange,
+	className,
+	...porps
+}) {
 	return (
 		<select
-			className={styles.select}
+			className={clsx(styles.select, className)}
 			value={value}
 			onChange={(e) => onChange(e.target.value)}
 		>
