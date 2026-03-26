@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "../router/Routes.jsx";
 // import { AuthContext } from "../context/context.js";
 import { AuthContext } from "../models/AuthContextType";
@@ -12,15 +12,20 @@ function AppRouter() {
 	// берем из context значение глобальной переменной
 	// const { isAuth, isLoading } = useContext(AuthContext);
 	const { store } = useContext(Context);
+	const navigate = useNavigate();
 	useEffect(() => {
 		if (localStorage.getItem("guest") === "true") {
-			store.isGuest = true;
+			store.setGuest(true);
+
 			return;
 		}
 
-		// console.log(store, "store");
 		if (localStorage.getItem("token")) {
 			store.checkAuth();
+		}
+
+		if (store.isGuest == false && !localStorage.getItem("token")) {
+			navigate("/login");
 		}
 	}, []);
 

@@ -25,6 +25,10 @@ export default class Store {
 		this.isLoading = value;
 	}
 
+	setGuest(value: boolean) {
+		this.isGuest = value;
+	}
+
 	async login(email: string, password: string) {
 		try {
 			this.isGuest = false;

@@ -70,11 +70,11 @@ class UserController {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
 				// для http нужно след
-				// secure: true,
-				// sameSite: "none",
+				secure: true,
+				sameSite: "none",
 				// это отлько для локалхост
-				secure: false,
-				sameSite: "lax",
+				// secure: false,
+				// sameSite: "lax",
 			});
 			return res.json(userData);
 		} catch (error) {

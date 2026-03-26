@@ -8,14 +8,11 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
-//чтобы парсить json формат
-app.use(express.json());
-app.use(cookieParser());
-
 // CORS
 const allowedOrigins = [
 	"https://posts-fullstack-c9b7.onrender.com",
 	"https://posts-fullstack.onrender.com",
+	"https://localhost:5173",
 	"http://localhost:5173",
 	"http://localhost:7000",
 	// process.env.CLIENT_URL,
@@ -35,20 +32,12 @@ app.use(
 	}),
 );
 
-// и добавляем заголовок вручную вдруг експресс что-то не понравится
-app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Credentials", "true");
-	res.header(
-		"Access-Control-Allow-Headers",
-		"Origin, X-Requested-With, Content-Type, Accept, Authorization",
-	);
-	res.header(
-		"Access-Control-Allow-Methods",
-		"GET, POST, PUT, PATCH, DELETE, OPTIONS",
-	);
-	res.header("Access-Control-Allow-Origin", req.headers.origin);
-	next();
-});
+//чтобы парсить json формат
+app.use(express.json());
+app.use(cookieParser());
+
+// ОБЯЗАТЕЛЬНО — до роутов
+// app.options("*", cors());
 
 // роуты
 const router = require("./routes/index");
