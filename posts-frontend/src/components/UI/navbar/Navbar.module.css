@@ -1,3 +1,9 @@
+.backgroundWrap {
+	width: 100%;
+	background-color: var(--color-bg);
+	border-bottom: 1px solid var(--color-border);
+}
+
 .nav {
 	display: flex;
 	align-items: center;
@@ -13,11 +19,28 @@
 .link {
 	text-transform: uppercase;
 	text-decoration: none;
-	color: #333;
+	color: var(--color-text);
 	font-weight: 500;
-	transition: color 0.2s ease;
+	transition: color var(--transition);
 }
 
 .link:hover {
-	color: teal;
+	color: var(--color-primary);
 }
+
+@media (max-width: 767px) {
+	.nav {
+		height: auto;
+		gap: 10px;
+	}
+}
+
+/* @media (min-width: 768px) and (max-width: 1023px) {
+	.nav {
+	}
+}
+
+@media (min-width: 1024px) {
+	.nav {
+	}
+} */

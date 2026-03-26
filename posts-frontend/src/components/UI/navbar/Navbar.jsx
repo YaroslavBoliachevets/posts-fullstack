@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Button from "../button/Button";
 import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
+import clsx from "clsx";
 
 import styles from "./Navbar.module.css";
 
@@ -22,8 +23,8 @@ function Navbar() {
 
 	const isLoginPage = location.pathname === "/login";
 	return (
-		<div className="background-wrap">
-			<div className={`container ${styles.nav}`}>
+		<div className={styles.backgroundWrap}>
+			<div className={clsx("container", styles.nav)}>
 				{store.isAuth && (
 					<Button variant="primary" onClick={logout}>
 						exit

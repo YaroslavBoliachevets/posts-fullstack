@@ -13,6 +13,6 @@ export const Context = createContext<State>({ store });
 
 createRoot(document.getElementById("root")!).render(
 	<Context.Provider value={{ store }}>
-		<App />,
+		<App />
 	</Context.Provider>,
 );
