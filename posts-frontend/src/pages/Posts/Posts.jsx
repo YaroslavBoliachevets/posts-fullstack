@@ -95,9 +95,9 @@ function Posts() {
 						<Button onClick={() => setModal(true)} disabled={store.isGuest}>
 							create post
 						</Button>
-						{/* <Modal visible={modal} setVisible={setModal}>
+						<Modal visible={modal} setVisible={setModal}>
 							<PostForm change={createPost} buttonName={"create post"} />
-						</Modal> */}
+						</Modal>
 
 						<div className={styles.controls}>
 							<PostFilter

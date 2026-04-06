@@ -8,6 +8,7 @@ import Button from "../../components/UI/button/Button";
 import { Context } from "../../main";
 import CommentService from "../../services/CommentService";
 import CommentForm from "../../components/UI/commentForm/CommentForm";
+import CommentList from "../../components/CommentList";
 
 function PostIdPage() {
 	const { store } = useContext(Context);
@@ -81,38 +82,15 @@ function PostIdPage() {
 					<Loader />
 				) : (
 					<div className={styles.commentsSection}>
-						{comments == 0 && (
+						{comments.length == 0 && (
 							<h2 className={styles.noComments}>No comments here yet...</h2>
 						)}
-						{comments.map((comment) => {
-							return (
-								<div className={styles.comment} key={comment.id}>
-									<div className={styles.meta}>
-										{store.user.email == comment.user.email ? (
-											<span className={styles.badge}>your comment</span>
-										) : (
-											<span className={styles.email}>{comment.user.email}</span>
-										)}
-									</div>
-									<div className={styles.body}>{comment.body}</div>
-									{store.user.email == comment.user.email ? (
-										<div className={styles.actions}>
-											<Button
-												onClick={() => deleteComment(comment.id)}
-												disabled={store.isGuest}
-											>
-												delete
-											</Button>
-											<Button onClick={() => setComment(comment)} disabled={store.isGuest}>
-												upd
-											</Button>
-										</div>
-									) : (
-										""
-									)}
-								</div>
-							);
-						})}
+
+						<CommentList
+							comments={comments}
+							setComment={setComment}
+							deleteComment={deleteComment}
+						/>
 					</div>
 				)}
 				<CommentForm
