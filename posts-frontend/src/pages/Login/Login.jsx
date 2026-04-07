@@ -24,7 +24,8 @@ function Login() {
 
 	const registration = async (e) => {
 		e.preventDefault();
-		await store.registration(email, password);
+		const res = await store.registration(email, password);
+		if (res) navigate("/posts");
 	};
 
 	const guest = (e) => {
