@@ -18,6 +18,7 @@ function PostForm({ change, buttonName, formPost = {} }) {
 	const changePost = (e) => {
 		const userId = store.user.id;
 		e.preventDefault();
+
 		change({ ...post, userId });
 	};
 
@@ -37,7 +38,12 @@ function PostForm({ change, buttonName, formPost = {} }) {
 				type="text"
 				placeholder="Post article"
 			/>
-			<Button onClick={changePost}>{buttonName}</Button>
+			<Button
+				onClick={changePost}
+				disabled={!post.title.trim() || !post.body.trim()}
+			>
+				{buttonName}
+			</Button>
 		</form>
 	);
 }
