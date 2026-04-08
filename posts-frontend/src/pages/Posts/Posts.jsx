@@ -92,7 +92,10 @@ function Posts() {
 			<div className="container">
 				<div>
 					<div className={styles.toolbar}>
-						<Button onClick={() => setModal(true)} disabled={store.isGuest}>
+						<Button
+							onClick={() => setModal(true)}
+							disabled={store.isGuest || store.user}
+						>
 							create post
 						</Button>
 						<Modal visible={modal} setVisible={setModal}>
