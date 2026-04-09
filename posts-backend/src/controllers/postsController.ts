@@ -75,7 +75,15 @@ class PostsController {
 
 	async getOne(req: Request, res: Response) {
 		const id = Number(req.params.id);
-		const post = await prisma.posts.findUnique({ where: { id: id } });
+		const post = await prisma.posts.findUnique({
+			where: { id: id },
+			include: {
+				user: {
+					select: { email: true },
+				},
+			},
+		});
+
 		return res.json(post);
 	}
 }

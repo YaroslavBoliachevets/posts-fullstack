@@ -31,7 +31,7 @@ function Navbar() {
 					</Button>
 				)}
 
-				{store.isGuest && !store.isAuth && !isLoginPage && (
+				{store.isGuest && !store.isAuth && !isLoginPage && store.user && (
 					<Button variant="primary" onClick={login}>
 						login
 					</Button>
