@@ -9,6 +9,16 @@
 	margin-bottom: 40px;
 }
 
+.postCreateData {
+	display: flex;
+	justify-content: space-between;
+}
+
+.createInfo {
+	font-size: 12px;
+	color: var(--color-border);
+}
+
 .title {
 	font-size: 32px;
 	font-weight: 700;

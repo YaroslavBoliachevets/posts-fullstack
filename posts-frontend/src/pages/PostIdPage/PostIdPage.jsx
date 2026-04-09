@@ -9,6 +9,7 @@ import { Context } from "../../main";
 import CommentService from "../../services/CommentService";
 import CommentForm from "../../components/UI/commentForm/CommentForm";
 import CommentList from "../../components/CommentList";
+import formatDate from "../../utils/formatDate";
 
 function PostIdPage() {
 	const { store } = useContext(Context);
@@ -21,17 +22,16 @@ function PostIdPage() {
 	const [comment, setComment] = useState(null);
 
 	// загрузка по id
-	const [fetchPostById, isLoading, error] = useFetching(async (params) => {
-		const responce = await PostService.getById(id);
-		setPost(responce.data);
+	const [fetchPostById, isLoading, error] = useFetching(async () => {
+		const response = await PostService.getById(id);
+		const date = formatDate(response.data.createdAt);
+		setPost({ ...response.data, createdAt: date });
 	});
 
-	const [fetchComments, isComLoading, errorComments] = useFetching(
-		async (params) => {
-			const response = await CommentService.getAll(id);
-			setComments(response.data);
-		},
-	);
+	const [fetchComments, isComLoading, errorComments] = useFetching(async () => {
+		const response = await CommentService.getAll(id);
+		setComments(response.data);
+	});
 
 	// следим за id потому что при первом он может быть недоступный, потом вызывается fetchPostById, уже с неё async useFetching, после обновляется состояние
 	useEffect(() => {
@@ -69,6 +69,11 @@ function PostIdPage() {
 		<div className="container">
 			<div className={styles.wrap}>
 				<div className={styles.postSection}>
+					<div className={styles.postCreateData}>
+						<p className={styles.createInfo}> {post?.createdAt}</p>
+						<p className={styles.createInfo}> {post?.user?.email}</p>
+					</div>
+
 					<h1 className={styles.title}>{post.title}</h1>
 
 					{isLoading ? (

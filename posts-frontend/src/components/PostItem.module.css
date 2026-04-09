@@ -71,7 +71,8 @@
 }
 
 .author {
-	margin-left: auto;
+	display: flex;
+	justify-content: space-between;
 }
 
 .commentsBlock {

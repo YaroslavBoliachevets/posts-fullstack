@@ -10,15 +10,18 @@ import clsx from "clsx";
 import Modal from "./UI/modal/Modal";
 import PostForm from "./PostForm";
 import PostService from "../services/PostService";
+import formatDate from "../utils/formatDate";
 
 const PostItem = function (props) {
-	const { title, body, id, user, _count } = props.post;
+	const { title, body, id, user, _count, createdAt } = props.post;
 	const { number, remove, update } = props;
 	const navigate = useNavigate();
 
 	const [modal, setModal] = useState(false);
 
 	const { store } = useContext(Context);
+
+	const date = formatDate(createdAt);
 
 	const openPost = (id) => {
 		navigate(`/posts/${id}`);
@@ -59,10 +62,11 @@ const PostItem = function (props) {
 							<p className={styles.body}>{body}</p>
 						</div>
 						<div className={styles.author}>
+							<p className={styles.email}>{date}</p>
 							{user?.email === store.user.email ? (
-								<span className={styles.badge}>your post</span>
+								<p className={styles.badge}>your post</p>
 							) : (
-								<span className={styles.email}>{user?.email}</span>
+								<p className={styles.email}>{user?.email}</p>
 							)}
 						</div>
 					</div>
