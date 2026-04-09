@@ -1,6 +1,6 @@
 .wrap {
 	max-width: 800px;
-	margin: 40px auto;
+	margin: var(--space-lg) auto;
 	padding: 0 20px;
 }
 
@@ -16,39 +16,36 @@
 
 .createInfo {
 	font-size: 12px;
-	color: var(--color-border);
+	color: var(--color-secondary);
 }
 
 .title {
 	font-size: 32px;
 	font-weight: 700;
-	margin-bottom: 20px;
+	margin: var(--space-lg) 0;
 }
 
 .postBody {
-	font-size: 18px;
+	font-size: var(--font-size-base);
+	text-align: justify;
 	line-height: 1.6;
-	color: #333;
+	color: var(--color-text);
 }
 
 /* =====COMMENTS======= */
 
-.commentsSection {
-	margin-top: 40px;
-}
-
 .noComments {
 	text-align: center;
 	font-size: 18px;
-	color: #777;
+	color: var(--color-secondary);
 	min-height: 150px; /* растягиваем секцию */
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
-	background: #fafafa;
-	border: 1px solid #eee;
-	border-radius: 10px;
+	background: var(--color-bg);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
 	padding: 40px;
-	margin-bottom: 20px;
+	margin-bottom: var(--space-lg);
 }
