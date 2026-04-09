@@ -33,7 +33,10 @@ function CommentForm({ initialComment, onCreate, onUpdate }) {
 					onChange={(e) => setText(e.target.value)}
 					className={styles.input}
 				></Input>
-				<Button onClick={(e) => handleSubmit(e)} disabled={store.isGuest}>
+				<Button
+					onClick={(e) => handleSubmit(e)}
+					disabled={store.isGuest || !store.user}
+				>
 					{isEdit ? "update" : "send"}
 				</Button>
 			</form>
