@@ -7,17 +7,11 @@ import { useNavigate } from "react-router";
 import { Context } from "../main";
 import { useContext, useState } from "react";
 import clsx from "clsx";
-import Modal from "./UI/modal/Modal";
-import PostForm from "./PostForm";
-import PostService from "../services/PostService";
 import formatDate from "../utils/formatDate";
 
 const PostItem = function (props) {
 	const { title, body, id, user, _count, createdAt } = props.post;
-	const { number, remove, update } = props;
 	const navigate = useNavigate();
-
-	const [modal, setModal] = useState(false);
 
 	const { store } = useContext(Context);
 
@@ -25,17 +19,6 @@ const PostItem = function (props) {
 
 	const openPost = (id) => {
 		navigate(`/posts/${id}`);
-	};
-
-	const openModal = (e) => {
-		e.stopPropagation();
-		setModal(true);
-	};
-
-	const updatePost = async (post) => {
-		const response = await PostService.updatePost(post);
-		update(post);
-		setModal(false);
 	};
 
 	return (
@@ -70,28 +53,6 @@ const PostItem = function (props) {
 							)}
 						</div>
 					</div>
-					<div className={styles.actions}>
-						{/* <Button onClick={() => openPost(id)}>open</Button>
-
-						<Button
-							onClick={(e) => {
-								openModal(e);
-							}}
-							disabled={store.isGuest || store.user?.email != user?.email}
-						>
-							update
-						</Button>
-
-						<Button
-							onClick={(e) => {
-								e.stopPropagation();
-								remove(props.post);
-							}}
-							disabled={store.isGuest || store.user?.email != user?.email}
-						>
-							delete
-						</Button> */}
-					</div>
 				</div>
 				<div className={styles.commentsBlock}>
 					{_count?.comments > 0 ? (
@@ -103,13 +64,6 @@ const PostItem = function (props) {
 					)}
 				</div>
 			</motion.div>
-			<Modal visible={modal} setVisible={setModal}>
-				<PostForm
-					buttonName={"update post"}
-					change={updatePost}
-					formPost={props.post}
-				/>
-			</Modal>
 		</>
 	);
 };

@@ -27,21 +27,11 @@ function PostForm({ change, buttonName, formPost = {} }) {
 
 		const title = post.title.trim();
 		const body = post.body.trim();
-		console.log(
-			" ---title---",
-			title,
-			"---body---",
-			body,
-			"if (body)",
-			Boolean(body),
-		);
 		const newErrors = {
 			title: Boolean(!title),
 			body: Boolean(!body),
 		};
 		setErrors(newErrors);
-		console.log("errors", errors);
-
 		if (newErrors.title || newErrors.body) return;
 		change({ ...post, userId });
 	};
@@ -73,12 +63,7 @@ function PostForm({ change, buttonName, formPost = {} }) {
 				type="text"
 				placeholder="Post article"
 			/>
-			<Button
-				onClick={changePost}
-				// disabled={!post.title.trim() || !post.body.trim()}
-			>
-				{buttonName}
-			</Button>
+			<Button onClick={changePost}>{buttonName}</Button>
 		</form>
 	);
 }

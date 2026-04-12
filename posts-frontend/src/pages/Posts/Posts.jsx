@@ -62,17 +62,6 @@ function Posts() {
 		setModal(false);
 	};
 
-	const removePost = async (post) => {
-		await PostService.deletePost(post.id);
-		setPosts(posts.filter((p) => p.id !== post.id));
-	};
-
-	const updatePostInState = (updatedPost) => {
-		setPosts((prev) =>
-			prev.map((p) => (p.id === updatedPost.id ? updatedPost : p)),
-		);
-	};
-
 	useObserver(
 		lastElement,
 		page < totalPages && posts.length > 0,
@@ -131,8 +120,6 @@ function Posts() {
 							className={styles.postlist}
 							posts={sortedAndSearchPosts}
 							title="Posts"
-							remove={removePost}
-							update={updatePostInState}
 						/>
 						{/* ref={lastElement} автоматически кладет в коробку lastElement.current =  наш div
 						 */}

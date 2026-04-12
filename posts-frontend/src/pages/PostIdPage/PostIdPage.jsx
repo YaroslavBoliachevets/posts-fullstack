@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import styles from "./PostIdPage.module.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useFetching from "../../hooks/useFetching";
 import PostService from "../../services/PostService";
 import Loader from "../../components/UI/loader/Loader";
@@ -10,6 +10,8 @@ import CommentService from "../../services/CommentService";
 import CommentForm from "../../components/UI/commentForm/CommentForm";
 import CommentList from "../../components/CommentList";
 import formatDate from "../../utils/formatDate";
+import Modal from "../../components/UI/modal/Modal";
+import PostForm from "../../components/PostForm";
 
 function PostIdPage() {
 	const { store } = useContext(Context);
@@ -20,6 +22,9 @@ function PostIdPage() {
 	const [comments, setComments] = useState([]);
 
 	const [comment, setComment] = useState(null);
+	const [modal, setModal] = useState(false);
+
+	const navigate = useNavigate();
 
 	// загрузка по id
 	const [fetchPostById, isLoading, error] = useFetching(async () => {
@@ -65,6 +70,27 @@ function PostIdPage() {
 		setComment(null);
 	}
 
+	function openModal() {
+		setModal(true);
+	}
+
+	const updatePost = async (post) => {
+		const response = await PostService.updatePost(post);
+		console.log("res", response.data);
+		setPost((prev) => ({
+			...prev,
+			title: response.data.title,
+			body: response.data.body,
+		}));
+		setModal(false);
+	};
+
+	const removePost = async (e) => {
+		e.stopPropagation();
+		await PostService.deletePost(post.id);
+		navigate("/posts");
+	};
+
 	return (
 		<div className="container">
 			<div className={styles.wrap}>
@@ -80,6 +106,26 @@ function PostIdPage() {
 						<Loader />
 					) : (
 						<div className={styles.postBody}>{post.body}</div>
+					)}
+
+					{store?.user?.email == post?.user?.email && (
+						<div>
+							<Button
+								onClick={(e) => {
+									openModal(e);
+								}}
+							>
+								update
+							</Button>
+
+							<Button
+								onClick={(e) => {
+									removePost(e);
+								}}
+							>
+								delete
+							</Button>
+						</div>
 					)}
 				</div>
 
@@ -104,6 +150,10 @@ function PostIdPage() {
 					onUpdate={updateComment}
 				/>
 			</div>
+
+			<Modal visible={modal} setVisible={setModal}>
+				<PostForm buttonName={"update post"} change={updatePost} formPost={post} />
+			</Modal>
 		</div>
 	);
 }
