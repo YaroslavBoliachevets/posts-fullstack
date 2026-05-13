@@ -5,11 +5,15 @@ import Button from "../button/Button";
 import Input from "../input/Input";
 import { Context } from "../../../main";
 import { useContext, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
+import { toastPromise, COMMENT_MESSAGES } from "../../../shared/lib/toast";
+import { ToasterProvider } from "../../../shared/ui/ToasterProvider";
 
 function CommentForm({ initialComment, onCreate, onUpdate }) {
 	const { store } = useContext(Context);
 	const isEdit = Boolean(initialComment);
 	const [text, setText] = useState(initialComment?.body ?? "");
+
 	useEffect(() => {
 		setText(initialComment?.body ?? "");
 	}, [initialComment]);
@@ -17,9 +21,12 @@ function CommentForm({ initialComment, onCreate, onUpdate }) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (isEdit) {
-			onUpdate({ ...initialComment, body: text });
+			toastPromise(
+				onUpdate({ ...initialComment, body: text }),
+				COMMENT_MESSAGES.update,
+			);
 		} else {
-			onCreate(text);
+			toastPromise(onCreate(text), COMMENT_MESSAGES.create);
 		}
 		setText("");
 	};
@@ -40,6 +47,7 @@ function CommentForm({ initialComment, onCreate, onUpdate }) {
 					{isEdit ? "update" : "send"}
 				</Button>
 			</form>
+			<ToasterProvider />
 		</div>
 	);
 }

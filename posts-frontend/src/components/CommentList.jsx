@@ -4,9 +4,16 @@ import { Context } from "../main";
 import { useContext } from "react";
 import Button from "./UI/button/Button";
 import clsx from "clsx";
+import { notifyCommentDeleted } from "../shared/lib/toast";
 
 function CommentList({ comments, deleteComment, setComment }) {
 	const { store } = useContext(Context);
+
+	const handleCommentDelete = (id) => {
+		deleteComment(id);
+		notifyCommentDeleted();
+	};
+
 	return (
 		<>
 			{comments.map((comment) => {
@@ -29,7 +36,7 @@ function CommentList({ comments, deleteComment, setComment }) {
 						{store.user.email == comment.user.email ? (
 							<div className={styles.actions}>
 								<Button
-									onClick={() => deleteComment(comment.id)}
+									onClick={() => handleCommentDelete(comment.id)}
 									disabled={store.isGuest}
 								>
 									delete
