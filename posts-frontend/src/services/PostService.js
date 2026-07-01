@@ -17,10 +17,11 @@ export default class PostService {
 
 	static async createNewPost(post) {
 		try {
+			console.log("post", post);
 			const response = await $api.post("/api/posts/create", post);
 			return response;
 		} catch (error) {
-			console.log("create post error");
+			console.log("create post error", error.message);
 		}
 	}
 

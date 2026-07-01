@@ -80,12 +80,14 @@
 	color: var(--color-text);
 	margin-top: var(--space-xs);
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
+	align-items: center;
 	padding: var(--space-sm) var(--space-lg);
 	border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .comments {
 	font-size: 12px;
+	margin-left: auto;
 	color: var(--color-primary);
 }

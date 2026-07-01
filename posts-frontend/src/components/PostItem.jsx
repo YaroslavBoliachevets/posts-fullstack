@@ -8,9 +8,10 @@ import { Context } from "../main";
 import { useContext, useState } from "react";
 import clsx from "clsx";
 import formatDate from "../utils/formatDate";
+import { PostTags } from "./postTags/PostTags";
 
 const PostItem = function (props) {
-	const { title, body, id, user, _count, createdAt } = props.post;
+	const { title, body, id, user, _count, createdAt, tags } = props.post;
 	const navigate = useNavigate();
 
 	const { store } = useContext(Context);
@@ -55,6 +56,7 @@ const PostItem = function (props) {
 					</div>
 				</div>
 				<div className={styles.commentsBlock}>
+					<PostTags tags={tags} />
 					{_count?.comments > 0 ? (
 						<span className={styles.comments}>
 							total comments:{_count?.comments ?? 0}

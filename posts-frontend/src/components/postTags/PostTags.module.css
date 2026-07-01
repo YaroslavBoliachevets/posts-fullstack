@@ -1,0 +1,25 @@
+.container {
+	display: flex;
+	gap: 6px;
+	margin-top: 12px;
+	margin-bottom: 8px;
+	flex-wrap: wrap;
+}
+
+.tag {
+	background-color: #eff6ff; /* Нежно-синий фон */
+	color: #1e40af; /* Темно-синий текст */
+	padding: 4px 10px;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 500;
+	border: 1px solid #bfdbfe;
+	text-transform: lowercase; /* Всегда в нижнем регистре */
+	transition: all 0.2s ease;
+}
+
+/* Эффект при наведении, чтобы интерфейс казался живым */
+.tag:hover {
+	background-color: #dbeafe;
+	transform: translateY(-1px);
+}

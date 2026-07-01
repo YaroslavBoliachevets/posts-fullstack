@@ -49,14 +49,26 @@ function PostIdPage() {
 	async function addNewComment(comment) {
 		const userId = store.user.id;
 		const postId = Number(id);
-		const newComment = await CommentService.create({
+		const request = await CommentService.create({
 			body: comment,
 			postId,
 			userId,
 		});
-		setComments((prev) => [...prev, newComment.data]);
-		shouldScroll.current = true;
-		setComment("");
+
+		request
+			.then((newComment) => {
+				setComments((prev) => [...prev, newComment.data]);
+				shouldScroll.current = true;
+				setComment("");
+			})
+			.catch((err) => {
+				console.error("Create error:", err);
+			});
+		console.log("request:", request);
+		// setComments((prev) => [...prev, newComment.data]);
+		// shouldScroll.current = true;
+		// setComment("");
+		return request;
 	}
 
 	async function deleteComment(id) {
