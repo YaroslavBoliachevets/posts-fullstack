@@ -38,6 +38,7 @@ model Posts {
   userId  Int
   user    User @relation(fields:[userId], references:[id])
   comments Comment[]
+  tags     PostTag[]
 }
 
 model Comment {
@@ -56,4 +57,20 @@ model Token {
   refreshToken String @unique
   userId Int @unique 
   user User @relation(fields:[userId], references:[id])
+}
+
+model Tag {
+  id Int @id @default(autoincrement())
+  body String @unique
+
+  posts PostTag[]
+}
+
+model PostTag {
+  postId Int
+  post Posts @relation(fields:[postId], references:[id] , onDelete:Cascade)
+  tagId Int
+  tag Tag @relation(fields:[tagId], references:[id], onDelete:Cascade)
+
+  @@id([postId, tagId])
 }

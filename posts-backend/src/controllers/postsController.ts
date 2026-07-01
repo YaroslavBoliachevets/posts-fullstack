@@ -1,18 +1,46 @@
+import { AIService } from "./../services/ai.service";
 import { Request, Response, NextFunction } from "express";
 import { Posts } from "../generated/prisma/client/client";
 import prisma from "../prisma/client";
 import ApiError from "../error/ApiError";
+import { toLowerCase } from "zod";
+import { body } from "express-validator";
 
 class PostsController {
 	async create(req: Request, res: Response, next: NextFunction) {
 		try {
 			const { title, body, userId } = req.body;
+			const aiResult = await AIService.AnalyzePostContent(title, body);
+			const tags = aiResult?.tags || [];
 			const newPost = await prisma.posts.create({
-				data: { title, body, userId },
-				include: { user: { select: { email: true } } },
+				data: {
+					title,
+					body,
+					user: { connect: { id: userId } },
+					// userId,
+					tags: {
+						create: tags.map((tagBody: string) => ({
+							tag: {
+								connectOrCreate: {
+									where: { body: tagBody.toLowerCase() },
+									create: { body: tagBody.toLowerCase() },
+								},
+							},
+						})),
+					},
+				},
+				include: {
+					user: { select: { email: true } },
+					tags: { include: { tag: true } },
+				},
 			});
-			return res.json(newPost);
+			const formattedPost = {
+				...newPost,
+				tags: newPost.tags.map((tag) => tag.tag.body),
+			};
+			return res.json(formattedPost);
 		} catch (e: any) {
+			console.error("!!! ОШИБКА СОЗДАНИЯ ПОСТА С ТЕГАМИ:", e);
 			next(ApiError.badRequest(e.message));
 		}
 	}
@@ -61,13 +89,20 @@ class PostsController {
 							email: true,
 						},
 					},
+					tags: { select: { tag: { select: { body: true } } } },
 					_count: {
 						select: { comments: true },
 					},
 				},
 			});
 			const totalPosts = await prisma.posts.count();
-			return res.json({ posts: allPosts, totalPosts });
+
+			const formattedPosts = allPosts.map((post) => ({
+				...post,
+				tags: post.tags.map((t) => t.tag.body),
+			}));
+
+			return res.json({ posts: formattedPosts, totalPosts });
 		} catch (e: any) {
 			next(ApiError.badRequest(e.message));
 		}
