@@ -2,7 +2,7 @@ import { IUser } from "../models/IUser";
 import { makeAutoObservable } from "mobx";
 import { AuthService } from "../services/AuthService";
 import axios from "axios";
-import { AuthResponce } from "../models/response/AuthResponse";
+import { AuthResponse } from "../models/response/AuthResponse";
 
 export default class Store {
 	user = {} as IUser;
@@ -38,11 +38,12 @@ export default class Store {
 			localStorage.removeItem("guest");
 
 			this.setIsLoading(true);
-			const responce = await AuthService.login(email, password);
-			// console.log("store login responce", responce);
-			localStorage.setItem("token", responce.data.accessToken);
+			const response = await AuthService.login(email, password);
+			// console.log("store login response", response);
+			localStorage.setItem("token", response.data.accessToken);
 			this.setAuth(true);
-			this.setUser(responce.data.user);
+			console.log("user", response.data.user);
+			this.setUser(response.data.user);
 		} catch (e: any) {
 			console.log(e.response?.data?.message);
 		} finally {
@@ -54,12 +55,12 @@ export default class Store {
 		try {
 			this.setIsLoading(true);
 			localStorage.removeItem("guest");
-			const responce = await AuthService.registration(email, password);
-			// console.log("store registration responce", responce);
-			localStorage.setItem("token", responce.data.accessToken);
+			const response = await AuthService.registration(email, password);
+			// console.log("store registration response", response);
+			localStorage.setItem("token", response.data.accessToken);
 			this.setAuth(true);
-			this.setUser(responce.data.user);
-			return responce;
+			this.setUser(response.data.user);
+			return response;
 		} catch (e: any) {
 			console.log(e.response?.data?.message);
 			throw e;
@@ -71,7 +72,7 @@ export default class Store {
 	async logout() {
 		try {
 			this.setIsLoading(true);
-			const responce = await AuthService.logout();
+			const response = await AuthService.logout();
 			localStorage.removeItem("token");
 			localStorage.removeItem("guest");
 			this.setAuth(false);
@@ -86,13 +87,13 @@ export default class Store {
 	async checkAuth() {
 		try {
 			this.setIsLoading(true);
-			const responce = await axios.get<AuthResponce>(
+			const response = await axios.get<AuthResponse>(
 				`${import.meta.env.VITE_API_URL}/api/user/refresh`,
 				{ withCredentials: true },
 			);
-			localStorage.setItem("token", responce.data.accessToken);
+			localStorage.setItem("token", response.data.accessToken);
 			this.setAuth(true);
-			this.setUser(responce.data.user);
+			this.setUser(response.data.user);
 		} catch (e: any) {
 			console.log(e.response?.data?.message);
 			this.setAuth(false);

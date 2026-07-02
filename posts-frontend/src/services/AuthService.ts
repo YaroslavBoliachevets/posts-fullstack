@@ -14,7 +14,7 @@ export const AuthService = {
 		return $api.post<AuthResponse>("/api/user/registration", { email, password });
 	},
 
-	logout(): Promise<void> {
+	logout(): Promise<AxiosResponse<void>> {
 		return $api.post("api/user/logout");
 	},
 };
