@@ -1,0 +1,65 @@
+.errorContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 70vh; /* Центрируем карточку по вертикали внутри контента */
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.errorCard {
+	background-color: #ffffff;
+	max-width: 500px;
+	width: 100%;
+	padding: 40px 30px;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Легкая тень */
+	border: 1px solid #e0e0e0;
+	/* Фирменная фишка: толстая полоса слева, как у карточек постов на скрине */
+	border-left: 6px solid #008080;
+	text-align: center;
+}
+
+.errorCode {
+	font-size: 72px;
+	margin: 0 0 10px 0;
+	color: #008080; /* Используем твой главный цвет приложения */
+	font-family: "Georgia", serif; /* Делаем цифры выразительными */
+	font-weight: bold;
+}
+
+.errorTitle {
+	font-size: 24px;
+	margin: 0 0 15px 0;
+	color: #2c3e50;
+	font-weight: 600;
+}
+
+.errorMessage {
+	font-size: 15px;
+	line-height: 1.6;
+	color: #555555; /* Мягкий цвет текста, как в описании постов */
+	margin: 0 0 30px 0;
+}
+
+.errorBtn {
+	background-color: #008080; /* Точный цвет твоих кнопок со скрина */
+	color: #ffffff;
+	border: none;
+	padding: 10px 24px;
+	font-size: 14px;
+	font-weight: 500;
+	border-radius: 6px;
+	cursor: pointer;
+	transition:
+		background-color 0.2s ease,
+		transform 0.1s ease;
+}
+
+.errorBtn:hover {
+	background-color: #006666; /* Чуть темнее при наведении */
+}
+
+.errorBtn:active {
+	transform: scale(0.98); /* Легкий эффект нажатия */
+}
