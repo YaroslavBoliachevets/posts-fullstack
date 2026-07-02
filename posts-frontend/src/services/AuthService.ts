@@ -17,4 +17,8 @@ export const AuthService = {
 	logout(): Promise<AxiosResponse<void>> {
 		return $api.post("api/user/logout");
 	},
+
+	refresh(): Promise<AxiosResponse<AuthResponse>> {
+		return $api.get<AuthResponse>("/api/user/refresh");
+	},
 };
