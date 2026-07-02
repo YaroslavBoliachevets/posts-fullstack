@@ -7,7 +7,7 @@ import { AuthResponce } from "../models/responce/AuthResponce";
 export default class Store {
 	user = {} as IUser;
 	isAuth = false;
-	isLoading = false;
+	isLoading = true;
 	isGuest = false;
 
 	constructor() {
@@ -15,10 +15,12 @@ export default class Store {
 	}
 	setAuth(bool: boolean) {
 		this.isAuth = bool;
+		this.setIsLoading(false);
 	}
 
 	setUser(user: IUser) {
 		this.user = user;
+		this.setIsLoading(false);
 	}
 
 	setIsLoading(value: boolean) {
@@ -27,6 +29,7 @@ export default class Store {
 
 	setGuest(value: boolean) {
 		this.isGuest = value;
+		this.setIsLoading(false);
 	}
 
 	async login(email: string, password: string) {
