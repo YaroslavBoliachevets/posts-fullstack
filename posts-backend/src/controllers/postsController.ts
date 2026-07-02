@@ -80,7 +80,7 @@ class PostsController {
 			const currentLimit = Number(limit) || 10;
 			let offset = (currentPage - 1) * currentLimit;
 			const allPosts = await prisma.posts.findMany({
-				orderBy: { id: "asc" },
+				orderBy: { createdAt: "desc" },
 				take: currentLimit,
 				skip: offset,
 				include: {
