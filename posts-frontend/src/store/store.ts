@@ -2,7 +2,7 @@ import { IUser } from "../models/IUser";
 import { makeAutoObservable } from "mobx";
 import { AuthService } from "../services/AuthService";
 import axios from "axios";
-import { AuthResponce } from "../models/responce/AuthResponce";
+import { AuthResponce } from "../models/response/AuthResponse";
 
 export default class Store {
 	user = {} as IUser;

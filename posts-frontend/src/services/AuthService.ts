@@ -1,17 +1,17 @@
 import { $api } from "../API/axios";
 import { AxiosResponse } from "axios";
-import { AuthResponce } from "../models/responce/AuthResponce";
+import { AuthResponse } from "../models/response/AuthResponse";
 
 export const AuthService = {
-	login(email: string, password: string): Promise<AxiosResponse<AuthResponce>> {
-		return $api.post<AuthResponce>("/api/user/login", { email, password });
+	login(email: string, password: string): Promise<AxiosResponse<AuthResponse>> {
+		return $api.post<AuthResponse>("/api/user/login", { email, password });
 	},
 
 	registration(
 		email: string,
 		password: string,
-	): Promise<AxiosResponse<AuthResponce>> {
-		return $api.post<AuthResponce>("/api/user/registration", { email, password });
+	): Promise<AxiosResponse<AuthResponse>> {
+		return $api.post<AuthResponse>("/api/user/registration", { email, password });
 	},
 
 	logout(): Promise<void> {
