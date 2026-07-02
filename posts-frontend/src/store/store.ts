@@ -11,7 +11,7 @@ export default class Store {
 	isGuest = false;
 
 	constructor() {
-		makeAutoObservable(this);
+		makeAutoObservable(this, {}, { autoBind: true });
 	}
 	setAuth(bool: boolean) {
 		this.isAuth = bool;
@@ -92,6 +92,8 @@ export default class Store {
 			this.setUser(responce.data.user);
 		} catch (e: any) {
 			console.log(e.response?.data?.message);
+			this.setAuth(false);
+			localStorage.removeItem("token");
 		} finally {
 			this.setIsLoading(false);
 		}
