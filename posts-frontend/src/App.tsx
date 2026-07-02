@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./styles/App.css";
+// import "./styles/App.css";
 import { BrowserRouter } from "react-router-dom";
 
 // маршрутизация по страничкам
-import AppRouter from "./components/AppRouter.jsx";
+import AppRouter from "./router/AppRouter.jsx";
 
 import Navbar from "./components/UI/navbar/Navbar.jsx";
 import { observer } from "mobx-react-lite";

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "../router/Routes.jsx";
 import { AuthContext } from "../models/AuthContextType";
-import Loader from "./UI/loader/Loader.jsx";
+import Loader from "../components/UI/loader/Loader.jsx";
 import { Context } from "../main.tsx";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
