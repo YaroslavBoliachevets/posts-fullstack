@@ -20,14 +20,12 @@ export const privateRoutes = [
 		element: <Login />,
 	},
 	{ path: "/error", element: <Error /> },
-	// перенаправляет все неправильные пути на страницу с постами
-	{ path: "*", element: <Login /> },
 ];
 
 export const publicRoutes = [
 	{ path: "/about", element: <About /> },
 	{
-		path: "*",
+		path: "/login",
 		element: <Login />,
 	},
 ];
