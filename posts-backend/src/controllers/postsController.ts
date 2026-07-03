@@ -1,11 +1,24 @@
 import { AIService } from "./../services/ai.service";
 import { Request, Response, NextFunction } from "express";
-import { Posts } from "../generated/prisma/client/client";
 import prisma from "../prisma/client";
 import ApiError from "../error/ApiError";
-import { toLowerCase } from "zod";
-import { body } from "express-validator";
 
+// везде где нужны доп данные create getall getone
+const postPopulateOptions = {
+	include: {
+		user: { select: { email: true } },
+		tags: { select: { tag: { select: { body: true } } } },
+		_count: { select: { comments: true } },
+	},
+};
+
+const formatPost = (post: any) => {
+	if (!post) return null;
+	return {
+		...post,
+		tags: post.tags ? post.tags.map((t: any) => t.tag.body) : [],
+	};
+};
 class PostsController {
 	async create(req: Request, res: Response, next: NextFunction) {
 		try {
@@ -17,7 +30,6 @@ class PostsController {
 					title,
 					body,
 					user: { connect: { id: userId } },
-					// userId,
 					tags: {
 						create: tags.map((tagBody: string) => ({
 							tag: {
@@ -29,16 +41,10 @@ class PostsController {
 						})),
 					},
 				},
-				include: {
-					user: { select: { email: true } },
-					tags: { include: { tag: true } },
-				},
+
+				...postPopulateOptions,
 			});
-			const formattedPost = {
-				...newPost,
-				tags: newPost.tags.map((tag) => tag.tag.body),
-			};
-			return res.json(formattedPost);
+			return res.json(formatPost(newPost));
 		} catch (e: any) {
 			console.error("!!! ОШИБКА СОЗДАНИЯ ПОСТА С ТЕГАМИ:", e);
 			next(ApiError.badRequest(e.message));
@@ -56,8 +62,9 @@ class PostsController {
 					title,
 					body,
 				},
+				...postPopulateOptions,
 			});
-			return res.json(updatedPost);
+			return res.json(formatPost(updatedPost));
 		} catch (e: any) {
 			next(ApiError.badRequest(e.message));
 		}
@@ -66,8 +73,9 @@ class PostsController {
 	async delete(req: Request, res: Response, next: NextFunction) {
 		try {
 			const id = Number(req.params.id);
-			const deletedPost = await prisma.posts.delete({ where: { id: id } });
-			return res.json(deletedPost);
+			await prisma.posts.delete({ where: { id: id } });
+			// 204 статус - нет контента,возращать нечего. end завершает запрос и гарантирует что улетят только заголовки
+			return res.status(204).end();
 		} catch (e: any) {
 			next(ApiError.badRequest(e.message));
 		}
@@ -83,43 +91,32 @@ class PostsController {
 				orderBy: { createdAt: "desc" },
 				take: currentLimit,
 				skip: offset,
-				include: {
-					user: {
-						select: {
-							email: true,
-						},
-					},
-					tags: { select: { tag: { select: { body: true } } } },
-					_count: {
-						select: { comments: true },
-					},
-				},
+				...postPopulateOptions,
 			});
 			const totalPosts = await prisma.posts.count();
-
-			const formattedPosts = allPosts.map((post) => ({
-				...post,
-				tags: post.tags.map((t) => t.tag.body),
-			}));
-
+			const formattedPosts = allPosts.map(formatPost);
 			return res.json({ posts: formattedPosts, totalPosts });
 		} catch (e: any) {
 			next(ApiError.badRequest(e.message));
 		}
 	}
 
-	async getOne(req: Request, res: Response) {
-		const id = Number(req.params.id);
-		const post = await prisma.posts.findUnique({
-			where: { id: id },
-			include: {
-				user: {
-					select: { email: true },
-				},
-			},
-		});
+	async getOne(req: Request, res: Response, next: NextFunction) {
+		try {
+			const id = Number(req.params.id);
+			const post = await prisma.posts.findUnique({
+				where: { id: id },
+				...postPopulateOptions,
+			});
 
-		return res.json(post);
+			if (!post) {
+				return res.status(404).json({ message: "пост не найден" });
+			}
+
+			return res.json(formatPost(post));
+		} catch (error) {
+			next(error);
+		}
 	}
 }
 
