@@ -1,8 +1,5 @@
+import { IPost } from "../IPost";
 export interface PostResponse {
-	userId: number;
-	id: number;
-	title: string;
-	body: string;
+	posts: IPost;
+	totalPosts: number;
 }
-
-export interface PostsResponse {}
