@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 // маршрутизация по страничкам
-import AppRouter from "./router/AppRouter.jsx";
+import AppRouter from "./router/AppRouter";
 
 import Navbar from "./components/UI/navbar/Navbar.jsx";
 import { observer } from "mobx-react-lite";

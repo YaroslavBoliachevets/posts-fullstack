@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { privateRoutes, publicRoutes, RoutePath } from "./Routes.tsx";
-import { Context } from "../main.tsx";
+import { privateRoutes, publicRoutes, RoutePath } from "./Routes";
+import { Context } from "../main";
 import { observer } from "mobx-react-lite";
 import Error from "../pages/Error.jsx";
 import Loader from "../components/UI/loader/Loader.jsx";
