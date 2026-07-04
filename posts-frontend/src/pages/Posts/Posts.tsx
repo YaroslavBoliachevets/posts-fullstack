@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import "../../styles/App.css";
 import styles from "./Posts.module.css";
-import clsx from "clsx";
 
 import PostList from "../../components/PostList";
 import PostForm from "../../components/PostForm";
 import PostFilter from "../../components/PostFilter";
 import Modal from "../../components/UI/modal/Modal";
-// import Pagination from "../../components/UI/pagination/Pagination";
 
 import Button from "../../components/UI/button/Button";
 import { usePosts } from "../../hooks/usePost";
@@ -16,7 +14,7 @@ import { useFetching } from "../../hooks/useFetching";
 import PostService from "../../services/PostService";
 import Loader from "../../components/UI/loader/Loader";
 
-import { getPagesCount, getPagesArray } from "../../utils/pages";
+import { getPagesCount } from "../../utils/pages";
 import { useObserver } from "../../hooks/useObserver";
 import { Context } from "../../main";
 import Select from "../../components/UI/select/Select";
@@ -41,14 +39,7 @@ function Posts() {
 	// находим последний эл чтобы при его появлении подгружать новые посты (для инфинити скролла)
 	const lastElement = useRef<HTMLDivElement | null>(null);
 
-	let pagesArray = getPagesArray(totalPages);
-
-	// const changePage = async (page) => {
-	// 	setPage(page);
-	// };
-
 	const changeLimit = (limit: number) => {
-		// console.log(isPostsLoading, "change limit");
 		setPosts([]);
 		setLimit(limit);
 		// при обновлении лимита страница прыгает на +1
@@ -134,8 +125,6 @@ function Posts() {
 						 */}
 						<div ref={lastElement} style={{ height: 2 }}></div>
 						{isPostsLoading && <Loader />}
-
-						{/* <Pagination totalPages={totalPages} changePage={changePage} page={page} /> */}
 					</div>
 				</div>
 			</div>
