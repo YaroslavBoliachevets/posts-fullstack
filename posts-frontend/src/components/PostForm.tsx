@@ -5,26 +5,37 @@ import Button from "./UI/button/Button";
 import Input from "./UI/input/Input";
 
 import { Context } from "../main";
-import { form } from "motion/react-client";
 import clsx from "clsx";
+import { IPost } from "../models/IPost";
 
-function PostForm({ change, buttonName, formPost = {} }) {
-	const [post, setPost] = useState({
+export interface PostFormProps {
+	change: (post: IPost) => void;
+	buttonName: string;
+	formPost?: Partial<IPost>;
+}
+
+interface IFormState {
+	title: string;
+	body: string;
+	id?: number;
+}
+
+function PostForm({ change, buttonName, formPost = {} }: PostFormProps) {
+	const [post, setPost] = useState<IFormState>({
 		title: formPost.title ?? "",
 		body: formPost.body ?? "",
 		...formPost,
 	});
 
-	const [errors, setErrors] = useState({
+	const [errors, setErrors] = useState<{ title: boolean; body: boolean }>({
 		title: false,
 		body: false,
 	});
 	const { store } = useContext(Context);
 
-	const changePost = (e) => {
-		const userId = store.user.id;
+	const changePost = (e: React.MouseEvent<HTMLButtonElement>) => {
+		const userId = store.user?.id;
 		e.preventDefault();
-
 		const title = post.title.trim();
 		const body = post.body.trim();
 		const newErrors = {
@@ -33,7 +44,7 @@ function PostForm({ change, buttonName, formPost = {} }) {
 		};
 		setErrors(newErrors);
 		if (newErrors.title || newErrors.body) return;
-		change({ ...post, userId });
+		change({ ...post, userId } as IPost);
 	};
 
 	return (
@@ -44,11 +55,13 @@ function PostForm({ change, buttonName, formPost = {} }) {
 				</span>
 			)}
 			<Input
-				onChange={(e) => setPost({ ...post, title: e.target.value })}
+				onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+					setPost({ ...post, title: e.target.value })
+				}
 				value={post.title}
 				type="text"
 				placeholder="Post title"
-				className={errors.title && styles.accent}
+				className={errors.title ? styles.accent : undefined}
 			/>
 
 			{errors.body && (
@@ -59,8 +72,9 @@ function PostForm({ change, buttonName, formPost = {} }) {
 			<textarea
 				className={clsx(styles.description, errors.body && styles.accent)}
 				value={post.body}
-				onChange={(e) => setPost({ ...post, body: e.target.value })}
-				type="text"
+				onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+					setPost({ ...post, body: e.target.value })
+				}
 				placeholder="Post article"
 			/>
 			<Button onClick={changePost}>{buttonName}</Button>
