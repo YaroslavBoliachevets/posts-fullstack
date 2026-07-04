@@ -1,5 +1,5 @@
 import { IPost } from "../IPost";
 export interface PostResponse {
-	posts: IPost;
+	posts: IPost[];
 	totalPosts: number;
 }
