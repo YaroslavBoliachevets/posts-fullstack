@@ -20,26 +20,34 @@ import { getPagesCount, getPagesArray } from "../../utils/pages";
 import { useObserver } from "../../hooks/useObserver";
 import { Context } from "../../main";
 import Select from "../../components/UI/select/Select";
+import { IPost } from "../../models/IPost";
+import { observer } from "mobx-react-lite";
+
+interface IFilter {
+	sort: string;
+	query: string;
+}
 
 function Posts() {
-	const [posts, setPosts] = useState([]);
+	const [posts, setPosts] = useState<IPost[]>([]);
 
-	const [filter, setFilter] = useState({ sort: "", query: "" });
-	const [modal, setModal] = useState(false);
-	const [totalPages, setTotalPages] = useState(0);
-	const [limit, setLimit] = useState(10);
-	const [page, setPage] = useState(1);
+	const [filter, setFilter] = useState<IFilter>({ sort: "", query: "" });
+	const [modal, setModal] = useState<boolean>(false);
+	const [totalPages, setTotalPages] = useState<number>(0);
+	const [limit, setLimit] = useState<number>(10);
+	const [page, setPage] = useState<number>(1);
+
 	const { store } = useContext(Context);
 	// находим последний эл чтобы при его появлении подгружать новые посты (для инфинити скролла)
-	const lastElement = useRef();
+	const lastElement = useRef<HTMLDivElement | null>(null);
 
 	let pagesArray = getPagesArray(totalPages);
 
-	const changePage = async (page) => {
-		setPage(page);
-	};
+	// const changePage = async (page) => {
+	// 	setPage(page);
+	// };
 
-	const changeLimit = (limit) => {
+	const changeLimit = (limit: number) => {
 		// console.log(isPostsLoading, "change limit");
 		setPosts([]);
 		setLimit(limit);
@@ -49,14 +57,15 @@ function Posts() {
 
 	const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
 		const response = await PostService.getAll(limit, page);
-		setPosts([...posts, ...response.data.posts]);
+		const postsArray = response.data.posts;
+		setPosts([...posts, ...postsArray]);
 		const totalPosts = response.data.totalPosts;
 		setTotalPages(getPagesCount(totalPosts, limit));
-	});
+	}) as [() => Promise<void>, boolean, string];
 
 	const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query);
 
-	const createPost = async (newPost) => {
+	const createPost = async (newPost: IPost) => {
 		const response = await PostService.createNewPost(newPost);
 		setPosts([response.data, ...posts]);
 		setModal(false);
@@ -100,7 +109,7 @@ function Posts() {
 							<Select
 								className={styles.filter}
 								value={limit}
-								onChange={(value) => changeLimit(value)}
+								onChange={(value: number) => changeLimit(value)}
 								defaultValue={"posts per page"}
 								options={[
 									{ value: 5, name: "5" },
@@ -133,4 +142,4 @@ function Posts() {
 		</>
 	);
 }
-export default Posts;
+export default observer(Posts);
