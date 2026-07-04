@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 // маршрутизация по страничкам
 import AppRouter from "./router/AppRouter";
 
-import Navbar from "./components/UI/navbar/Navbar.jsx";
+import Navbar from "./components/UI/navbar/Navbar";
 import { observer } from "mobx-react-lite";
 
 function App() {
