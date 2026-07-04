@@ -22,7 +22,7 @@ import { IPost } from "../../models/IPost";
 import { observer } from "mobx-react-lite";
 
 export interface IFilter {
-	sort: string;
+	sort: keyof IPost | "";
 	query: string;
 }
 
@@ -49,7 +49,7 @@ function Posts() {
 	const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
 		const response = await PostService.getAll(limit, page);
 		const postsArray = response.data.posts;
-		setPosts([...posts, ...postsArray]);
+		setPosts((prevPosts) => [...prevPosts, ...postsArray]);
 		const totalPosts = response.data.totalPosts;
 		setTotalPages(getPagesCount(totalPosts, limit));
 	}) as [() => Promise<void>, boolean, string];

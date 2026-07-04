@@ -2,6 +2,7 @@ import React from "react";
 import Select from "./UI/select/Select";
 import Input from "./UI/input/Input";
 import { IFilter } from "../pages/Posts/Posts";
+import { IPost } from "../models/IPost";
 
 interface PostFilterProps {
 	filter: IFilter;
@@ -20,11 +21,9 @@ const PostFilter = ({ filter, setFilter, className }: PostFilterProps) => {
 				}
 			/>
 
-			<Select
+			<Select<keyof IPost | "">
 				value={filter.sort}
-				onChange={(selectedSort: string) =>
-					setFilter({ ...filter, sort: selectedSort })
-				}
+				onChange={(selectedSort) => setFilter({ ...filter, sort: selectedSort })}
 				defaultValue={"sort"}
 				options={[
 					{ value: "title", name: "by name" },
