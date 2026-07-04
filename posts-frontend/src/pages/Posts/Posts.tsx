@@ -23,7 +23,7 @@ import Select from "../../components/UI/select/Select";
 import { IPost } from "../../models/IPost";
 import { observer } from "mobx-react-lite";
 
-interface IFilter {
+export interface IFilter {
 	sort: string;
 	query: string;
 }
