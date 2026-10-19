@@ -9,16 +9,24 @@ import { useContext, useState } from "react";
 import clsx from "clsx";
 import formatDate from "../utils/formatDate";
 import { PostTags } from "./postTags/PostTags";
+import { IPost } from "../models/IPost";
 
-const PostItem = function (props) {
-	const { title, body, id, user, _count, createdAt, tags } = props.post;
+interface IPostData {
+	number: number;
+	key: number;
+	post: IPost;
+}
+
+const PostItem = function (props: IPostData) {
+	console.log("props", props);
+	const { body, createdAt, id, title, user, _count, tags } = props.post;
 	const navigate = useNavigate();
 
 	const { store } = useContext(Context);
 
 	const date = formatDate(createdAt);
 
-	const openPost = (id) => {
+	const openPost = () => {
 		navigate(`/posts/${id}`);
 	};
 
@@ -37,7 +45,7 @@ const PostItem = function (props) {
 					default: { type: "spring", duration: 1 },
 				}}
 				key={props.post.id}
-				onClick={() => openPost(id)}
+				onClick={() => openPost()}
 			>
 				<div className={styles.postInfo}>
 					<div className={styles.main}>

@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"useDefineForClassFields": true,
+		"lib": ["DOM", "DOM.Iterable", "ES2020"],
+		"module": "ESNext",
+		"skipLibCheck": true,
+
+		/* ВАЖНО ДЛЯ ПОЭТАПНОГО ПЕРЕХОДА */
+		"allowJs": true, // Разрешить компилятору читать .js и .jsx файлы
+		"checkJs": false, // Не ругаться на ошибки внутри обычных .js файлов
+
+		/* Режим сборщика Vite */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+
+		/* Проверка качества кода */
+		"strict": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noFallthroughCasesInSwitch": true
+	},
+	"include": ["src/**/*"]
+}

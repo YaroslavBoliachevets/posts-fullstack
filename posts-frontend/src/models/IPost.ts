@@ -1,3 +1,7 @@
+interface IPostCount {
+	comments: number;
+}
+
 export interface IPost {
 	body: string;
 	createdAt: string;
@@ -6,4 +10,5 @@ export interface IPost {
 	user: { email: string };
 	userId: number;
 	tags: string[];
+	_count: IPostCount;
 }
