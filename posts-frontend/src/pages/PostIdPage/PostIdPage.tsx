@@ -12,96 +12,130 @@ import CommentList from "../../components/CommentList";
 import formatDate from "../../utils/formatDate";
 import Modal from "../../components/UI/modal/Modal";
 import PostForm from "../../components/PostForm";
+import { ICommentCreate } from "../../models/IComment";
+import { IPost } from "../../models/IPost";
 
 function PostIdPage() {
 	const { store } = useContext(Context);
 	// console.log(store.user.email, "store");
 	// хук для получания параметра из динамически созданого url /posts/:id
 	const { id } = useParams();
-	const [post, setPost] = useState({});
-	const [comments, setComments] = useState([]);
+	// из параметра мы получаем строку, но нам нужно число - тут переводим или берем 0
+	const numericId = id ? Number(id) : 0;
 
-	const [comment, setComment] = useState(null);
+	const [post, setPost] = useState<IPost | null>(null);
+	const [comments, setComments] = useState<ICommentCreate[]>([]);
+
+	const [comment, setComment] = useState<ICommentCreate | null>(null);
 	const [modal, setModal] = useState(false);
 
 	const navigate = useNavigate();
+	const shouldScroll = useRef<boolean>(false);
 
 	// загрузка по id
 	const [fetchPostById, isLoading, error] = useFetching(async () => {
-		const response = await PostService.getById(id);
+		// если нет ид, не делаем запрос
+		if (!id) return;
+
+		const response = await PostService.getById(numericId);
 		const date = formatDate(response.data.createdAt);
 		setPost({ ...response.data, createdAt: date });
 	});
 
 	const [fetchComments, isComLoading, errorComments] = useFetching(async () => {
-		const response = await CommentService.getAll(id);
+		const response = await CommentService.getAll(numericId);
 		setComments(response.data);
 	});
 
 	// следим за id потому что при первом он может быть недоступный, потом вызывается fetchPostById, уже с неё async useFetching, после обновляется состояние
 	useEffect(() => {
 		if (id !== undefined) {
-			fetchPostById(id);
-			fetchComments(id);
+			fetchPostById();
+			fetchComments();
 		}
 	}, [id]);
 
-	async function addNewComment(comment) {
-		const userId = store.user.id;
-		const postId = Number(id);
-		const request = await CommentService.create({
-			body: comment,
-			postId,
-			userId,
-		});
+	async function addNewComment(commentBody: string) {
+		if (!store.user || !store.user.id) {
+			console.warn("User is not authenticated");
+			return;
+		}
+		const userId = Number(store.user.id);
+		const postId = numericId;
 
-		request
-			.then((newComment) => {
-				setComments((prev) => [...prev, newComment.data]);
-				shouldScroll.current = true;
-				setComment("");
-			})
-			.catch((err) => {
-				console.error("Create error:", err);
+		try {
+			const response = await CommentService.create({
+				body: commentBody,
+				postId,
+				userId,
 			});
-		console.log("request:", request);
-		// setComments((prev) => [...prev, newComment.data]);
-		// shouldScroll.current = true;
-		// setComment("");
-		return request;
+
+			if (response && response.data) {
+				setComments((prev) => [...prev, response.data]);
+			}
+
+			if (typeof shouldScroll !== "undefined" && shouldScroll) {
+				shouldScroll.current = true;
+			}
+			setComment(null);
+			return response;
+		} catch (error) {
+			throw error;
+		}
 	}
 
-	async function deleteComment(id) {
-		await CommentService.delete(id);
-		setComments(comments.filter((p) => p.id !== id));
+	async function deleteComment(id: number) {
+		try {
+			const response = await CommentService.delete(id);
+			if (response && response.data) {
+				setComments(comments.filter((p) => p.id !== id));
+			}
+			return response;
+		} catch (error) {
+			throw error;
+		}
 	}
 
-	async function updateComment(comment) {
-		await CommentService.update(comment);
-		setComments((prev) => prev.map((p) => (p.id == comment.id ? comment : p)));
-		setComment(null);
+	async function updateComment(comment: ICommentCreate) {
+		try {
+			const response = await CommentService.update(comment);
+			if (response && response.data) {
+				setComments((prev) =>
+					prev.map((p) => (p.id == comment.id ? response.data : p)),
+				);
+				setComment(null);
+			}
+			return response;
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	function openModal() {
 		setModal(true);
 	}
 
-	const updatePost = async (post) => {
-		const response = await PostService.updatePost(post);
-		console.log("res", response.data);
-		setPost((prev) => ({
-			...prev,
-			title: response.data.title,
-			body: response.data.body,
-		}));
-		setModal(false);
+	const updatePost = async (post: Omit<IPost, "user" | "createdAt">) => {
+		try {
+			const response = await PostService.updatePost(post);
+			if (response && response.data) {
+				setPost(response.data);
+				setModal(false);
+			}
+			return response;
+		} catch (error) {
+			throw error;
+		}
 	};
 
-	const removePost = async (e) => {
+	const removePost = async (e: React.SyntheticEvent) => {
 		e.stopPropagation();
+		if (!post) return;
 		await PostService.deletePost(post.id);
 		navigate("/posts");
 	};
+
+	if (isLoading || !post) return <Loader></Loader>;
 
 	return (
 		<div className="container">
@@ -114,17 +148,13 @@ function PostIdPage() {
 
 					<h1 className={styles.title}>{post.title}</h1>
 
-					{isLoading ? (
-						<Loader />
-					) : (
-						<div className={styles.postBody}>{post.body}</div>
-					)}
+					<div className={styles.postBody}>{post.body}</div>
 
 					{store?.user?.email == post?.user?.email && (
 						<div>
 							<Button
 								onClick={(e) => {
-									openModal(e);
+									openModal();
 								}}
 							>
 								update
@@ -157,7 +187,7 @@ function PostIdPage() {
 					</div>
 				)}
 				<CommentForm
-					initialComment={comment}
+					initialComment={comment || undefined}
 					onCreate={addNewComment}
 					onUpdate={updateComment}
 				/>

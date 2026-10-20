@@ -8,11 +8,12 @@ import { useContext, useEffect } from "react";
 import { toastPromise, COMMENT_MESSAGES } from "../../../shared/lib/toast";
 import { ToasterProvider } from "../../../shared/ui/ToasterProvider";
 import { ICommentCreate } from "../../../models/IComment";
+import { AxiosResponse } from "axios";
 
 interface ICommentForm {
 	initialComment?: ICommentCreate;
-	onCreate: (text: string) => Promise<void>;
-	onUpdate: (comment: ICommentCreate) => Promise<void>;
+	onCreate: (text: string) => Promise<AxiosResponse<ICommentCreate> | undefined>;
+	onUpdate: (comment: ICommentCreate) => Promise<AxiosResponse<ICommentCreate>>;
 }
 
 function CommentForm({ initialComment, onCreate, onUpdate }: ICommentForm) {
@@ -29,11 +30,14 @@ function CommentForm({ initialComment, onCreate, onUpdate }: ICommentForm) {
 		if (isEdit) {
 			toastPromise(
 				// добавил ! чтобы снять проверку initialComment на undefined, он 100 проц существует так как есть проверка isEdit
-				onUpdate({ ...initialComment!, body: text }),
+				onUpdate({ ...initialComment!, body: text }).then(() => {}),
 				COMMENT_MESSAGES.update,
 			);
 		} else {
-			toastPromise(onCreate(text), COMMENT_MESSAGES.create);
+			toastPromise(
+				onCreate(text).then(() => {}),
+				COMMENT_MESSAGES.create,
+			);
 		}
 		setText("");
 	};
