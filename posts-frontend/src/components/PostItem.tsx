@@ -18,7 +18,6 @@ interface IPostData {
 }
 
 const PostItem = function (props: IPostData) {
-	console.log("props", props);
 	const { body, createdAt, id, title, user, _count, tags } = props.post;
 	const navigate = useNavigate();
 
