@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import cl from "./About.module.css";
 
 function About() {
-	const [openIndex, setOpenIndex] = useState(null);
+	const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-	const toggleFAQ = (index) => {
+	const toggleFAQ = (index: number | null) => {
 		setOpenIndex(openIndex === index ? null : index);
 	};
 
