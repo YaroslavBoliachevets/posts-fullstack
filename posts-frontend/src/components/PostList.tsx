@@ -1,8 +1,15 @@
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import PostItem from "./PostItem";
+import { IPost } from "../models/IPost";
 
-function PostList({ posts, title, className }) {
+interface IPostList {
+	posts: IPost[];
+	title: string;
+	className: string;
+}
+
+function PostList({ posts, title, className }: IPostList) {
 	if (!posts.length)
 		return (
 			<h1 style={{ textAlign: "center", marginBottom: "20px" }}>No posts found</h1>
