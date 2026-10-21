@@ -1,35 +1,57 @@
-import axios from "axios";
+import { ICommentCreate } from "./../models/IComment";
 import { $api } from "../API/axios";
-import { ICommentCreate } from "../models/IComment";
+import { AxiosResponse } from "axios";
 
 export default class CommentService {
-	static async getAll(postId: number) {
-		const response = await $api.get(`/api/comments/all/${postId}`);
-		return response;
-	}
-	static async create(comment: ICommentCreate) {
+	static async getAll(postId: number): Promise<AxiosResponse<ICommentCreate[]>> {
 		try {
-			const response = await $api.post("/api/comments/create", comment);
+			const response = await $api.get<ICommentCreate[]>(
+				`/api/comments/all/${postId}`,
+			);
 			return response;
-		} catch (e) {
-			console.log("create comment error", e);
-		}
-	}
-	static async delete(id: number) {
-		try {
-			const response = await $api.delete(`/api/comments/${id}`);
-			return response;
-		} catch (error: any) {
-			console.log("comServ del error", error.message);
+		} catch (error) {
+			console.log("comServ getAll error", error);
+			throw error;
 		}
 	}
 
-	static async update(comment: ICommentCreate) {
+	static async create(
+		comment: ICommentCreate,
+	): Promise<AxiosResponse<ICommentCreate>> {
 		try {
-			const response = await $api.put(`/api/comments/${comment.id}`, comment);
+			const response = await $api.post<ICommentCreate>(
+				"/api/comments/create",
+				comment,
+			);
 			return response;
-		} catch (error: any) {
-			console.log("comServ upd error", error.message);
+		} catch (error) {
+			console.log("create comment error", error);
+			throw error;
+		}
+	}
+
+	static async delete(id: number): Promise<AxiosResponse<ICommentCreate>> {
+		try {
+			const response = await $api.delete<ICommentCreate>(`/api/comments/${id}`);
+			return response;
+		} catch (error) {
+			console.log("comServ del error", error);
+			throw error;
+		}
+	}
+
+	static async update(
+		comment: ICommentCreate,
+	): Promise<AxiosResponse<ICommentCreate>> {
+		try {
+			const response = await $api.put<ICommentCreate>(
+				`/api/comments/${comment.id}`,
+				comment,
+			);
+			return response;
+		} catch (error) {
+			console.log("comServ upd error", error);
+			throw error;
 		}
 	}
 }
