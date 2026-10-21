@@ -35,7 +35,7 @@ const PostItem = function (props: IPostData) {
 			<motion.div
 				className={clsx(
 					styles.post,
-					user?.email === store.user.email && styles.myPost,
+					user?.email === store.user?.email && styles.myPost,
 				)}
 				initial={{ transform: "translateX(-300px)" }}
 				animate={{ transform: "translateX(0px)" }}
@@ -54,7 +54,7 @@ const PostItem = function (props: IPostData) {
 						</div>
 						<div className={styles.author}>
 							<p className={styles.email}>{date}</p>
-							{user?.email === store.user.email ? (
+							{user?.email === store.user?.email ? (
 								<p className={styles.badge}>your post</p>
 							) : (
 								<p className={styles.email}>{user?.email}</p>

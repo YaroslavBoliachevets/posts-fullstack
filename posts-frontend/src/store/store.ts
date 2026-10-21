@@ -1,11 +1,11 @@
 import { IUser } from "../models/IUser";
 import { makeAutoObservable } from "mobx";
 import { AuthService } from "../services/AuthService";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { AuthResponse } from "../models/response/AuthResponse";
 
 export default class Store {
-	user = {} as IUser;
+	user: IUser | null = null;
 	isAuth = false;
 	isLoading = true;
 	isGuest = false;
@@ -18,7 +18,7 @@ export default class Store {
 		this.setIsLoading(false);
 	}
 
-	setUser(user: IUser) {
+	setUser(user: IUser | null) {
 		this.user = user;
 		this.setIsLoading(false);
 	}
@@ -39,60 +39,75 @@ export default class Store {
 
 			this.setIsLoading(true);
 			const response = await AuthService.login(email, password);
-			// console.log("store login response", response);
-			localStorage.setItem("token", response.data.accessToken);
-			this.setAuth(true);
-			console.log("user", response.data.user);
-			this.setUser(response.data.user);
-		} catch (e: any) {
-			console.log(e.response?.data?.message);
-		} finally {
-			this.setIsLoading(false);
-		}
-	}
-
-	async registration(email: string, password: string) {
-		try {
-			this.setIsLoading(true);
-			localStorage.removeItem("guest");
-			const response = await AuthService.registration(email, password);
-			// console.log("store registration response", response);
 			localStorage.setItem("token", response.data.accessToken);
 			this.setAuth(true);
 			this.setUser(response.data.user);
-			return response;
-		} catch (e: any) {
-			console.log(e.response?.data?.message);
+		} catch (e) {
+			if (axios.isAxiosError(e)) {
+				console.log("Store login error:", e.response?.data?.message || e.message);
+			}
 			throw e;
 		} finally {
 			this.setIsLoading(false);
 		}
 	}
 
-	async logout() {
+	async registration(
+		email: string,
+		password: string,
+	): Promise<AxiosResponse<AuthResponse>> {
+		try {
+			this.setIsLoading(true);
+			localStorage.removeItem("guest");
+			const response = await AuthService.registration(email, password);
+			localStorage.setItem("token", response.data.accessToken);
+			this.setAuth(true);
+			this.setUser(response.data.user);
+			return response;
+		} catch (e) {
+			if (axios.isAxiosError(e)) {
+				console.log(
+					"Store registration error:",
+					e.response?.data?.message || e.message,
+				);
+			}
+
+			throw e;
+		} finally {
+			this.setIsLoading(false);
+		}
+	}
+
+	async logout(): Promise<AxiosResponse<void>> {
 		try {
 			this.setIsLoading(true);
 			const response = await AuthService.logout();
 			localStorage.removeItem("token");
 			localStorage.removeItem("guest");
 			this.setAuth(false);
-			this.setUser({} as IUser);
-		} catch (e: any) {
-			console.log(e.response?.data?.message);
+			this.setUser(null);
+			return response;
+		} catch (e) {
+			if (axios.isAxiosError(e)) {
+				console.log("Store logout error:", e.response?.data?.message || e.message);
+			}
+			throw e;
 		} finally {
 			this.setIsLoading(false);
 		}
 	}
 
-	async checkAuth() {
+	async checkAuth(): Promise<void> {
 		try {
 			this.setIsLoading(true);
 			const response = await AuthService.refresh();
 			localStorage.setItem("token", response.data.accessToken);
 			this.setAuth(true);
 			this.setUser(response.data.user);
-		} catch (e: any) {
-			console.log(e.response?.data?.message);
+		} catch (e) {
+			if (axios.isAxiosError(e)) {
+				console.log("Store auth error:", e.response?.data?.message || e.message);
+			}
 			this.setAuth(false);
 			localStorage.removeItem("token");
 		} finally {
