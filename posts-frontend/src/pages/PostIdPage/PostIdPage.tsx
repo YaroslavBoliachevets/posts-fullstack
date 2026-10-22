@@ -14,6 +14,7 @@ import Modal from "../../components/UI/modal/Modal";
 import PostForm from "../../components/PostForm";
 import { ICommentCreate } from "../../models/IComment";
 import { IPost } from "../../models/IPost";
+import { RoutePath } from "../../router/Routes";
 
 function PostIdPage() {
 	const { store } = useContext(Context);
@@ -37,9 +38,19 @@ function PostIdPage() {
 		// если нет ид, не делаем запрос
 		if (!id) return;
 
-		const response = await PostService.getById(numericId);
-		const date = formatDate(response.data.createdAt);
-		setPost({ ...response.data, createdAt: date });
+		if (isNaN(Number(id))) {
+			navigate(RoutePath.ERROR);
+			return;
+		}
+
+		try {
+			const response = await PostService.getById(numericId);
+			const date = formatDate(response.data.createdAt);
+			setPost({ ...response.data, createdAt: date });
+		} catch (error) {
+			console.log("Post fetch error:", error);
+			navigate(RoutePath.ERROR);
+		}
 	});
 
 	const [fetchComments, isComLoading, errorComments] = useFetching(async () => {
