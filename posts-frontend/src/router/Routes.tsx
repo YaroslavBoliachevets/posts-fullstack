@@ -30,6 +30,7 @@ export const privateRoutes: IRoute[] = [
 		element: <PostIdPage />,
 	},
 	{ path: RoutePath.ERROR, element: <Error /> },
+	{ path: RoutePath.LOGIN, element: <Login /> },
 ];
 
 export const publicRoutes: IRoute[] = [

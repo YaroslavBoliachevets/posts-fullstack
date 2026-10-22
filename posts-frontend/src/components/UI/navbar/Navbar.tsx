@@ -13,27 +13,29 @@ function Navbar() {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	const logout = () => {
-		store.logout();
-		navigate(RoutePath.LOGIN);
-	};
-
-	const login = () => {
+	const logout = async () => {
+		await store.logout();
 		navigate(RoutePath.LOGIN);
 	};
 
 	const isLoginPage = location.pathname === RoutePath.LOGIN;
+	const isReady = !store.isLoading;
+
+	const showExitButton = store.isAuth;
+	const showLoginButton =
+		(!store.isAuth && !isLoginPage && isReady) || (store.isGuest && !isLoginPage);
+
 	return (
 		<div className={styles.backgroundWrap}>
 			<div className={clsx("container", styles.nav)}>
-				{store.isAuth && (
+				{showExitButton && (
 					<Button variant="primary" onClick={logout}>
 						exit
 					</Button>
 				)}
 
-				{store.isGuest && !store.isAuth && !isLoginPage && store.user && (
-					<Button variant="primary" onClick={login}>
+				{showLoginButton && (
+					<Button variant="primary" onClick={logout}>
 						login
 					</Button>
 				)}
