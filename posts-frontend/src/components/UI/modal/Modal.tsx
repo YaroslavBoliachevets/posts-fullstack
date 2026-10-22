@@ -2,7 +2,13 @@ import React from "react";
 import classes from "./Modal.module.css";
 import { motion, AnimatePresence } from "motion/react";
 
-function Modal({ children, visible, setVisible }) {
+interface IModal {
+	children: React.ReactNode;
+	visible: boolean;
+	setVisible: (state: boolean) => void;
+}
+
+function Modal({ children, visible, setVisible }: IModal) {
 	return (
 		<AnimatePresence initial={false}>
 			{visible && (
@@ -22,7 +28,7 @@ function Modal({ children, visible, setVisible }) {
 						initial={{ opacity: 0, transform: "translateX(-300px)" }}
 						animate={{ opacity: 1, transform: "translateX(0px)" }}
 						exit={{ opacity: 0, transform: "translateX(300px)" }}
-						transition={{ default: { type: "linear", duration: 0.3 } }}
+						transition={{ default: { ease: "linear", duration: 0.3 } }}
 					>
 						{children}
 					</motion.div>
