@@ -6,7 +6,7 @@ import Input from "../../components/UI/input/Input";
 // import { AuthContext } from "../../context/context";
 // import { AuthContext } from "../../models/AuthContextType";
 import { Context } from "../../main";
-// import { observer } from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 
 function Login() {
 	// const { isAuth, setIsAuth } = useContext(AuthContext);
@@ -16,19 +16,19 @@ function Login() {
 	const [password, setPassword] = useState("");
 	const { store } = useContext(Context);
 
-	const login = async (e) => {
+	const login = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		await store.login(email, password);
 		navigate("/posts");
 	};
 
-	const registration = async (e) => {
+	const registration = async (e: React.MouseEvent) => {
 		e.preventDefault();
 		const res = await store.registration(email, password);
 		if (res) navigate("/posts");
 	};
 
-	const guest = (e) => {
+	const guest = (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		store.loginGuest();
 		navigate("/about");
@@ -71,5 +71,5 @@ function Login() {
 	);
 }
 
-// export default observer(Login);
-export default Login;
+export default observer(Login);
+// export default Login;
