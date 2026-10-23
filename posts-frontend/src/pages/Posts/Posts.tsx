@@ -21,8 +21,8 @@ import { observer } from "mobx-react-lite";
 import { postStore } from "../../store/PostStore";
 
 export interface IFilter {
-	sort: keyof IPost | "";
-	query: string;
+	sort: Extract<keyof IPost, "title" | "body"> | "";
+	query: string | "";
 }
 const Posts = observer(() => {
 	const {
