@@ -54,8 +54,16 @@ class PostStore {
 			runInAction(() => {
 				const newPosts = response.data.posts;
 
+				// при возврате назад с postIdPage происходит фетч по старым page limit, посты дублируются, для фикса проверяю их на уникальость по id
+				const uniqueNewPosts = newPosts.filter(
+					(newPost) => !this.posts.some((oldPost) => oldPost.id === newPost.id),
+				);
+				if (uniqueNewPosts.length === 0) {
+					return;
+				}
+
 				if (this.page === 1) {
-					this.posts = newPosts;
+					this.posts = [...newPosts];
 				} else {
 					this.posts = [...this.posts, ...newPosts];
 				}
