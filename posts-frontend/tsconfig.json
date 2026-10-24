@@ -5,6 +5,7 @@
 		"lib": ["DOM", "DOM.Iterable", "ES2020"],
 		"module": "ESNext",
 		"skipLibCheck": true,
+		"types": ["vitest/globals", "@testing-library/jest-dom"],
 
 		/* ВАЖНО ДЛЯ ПОЭТАПНОГО ПЕРЕХОДА */
 		"allowJs": true, // Разрешить компилятору читать .js и .jsx файлы
