@@ -1,0 +1,1 @@
+cd posts-frontend && npm run test:run
